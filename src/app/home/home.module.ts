@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import { ListingFiltersPage } from '../listing-filters/listing-filters-page';
+import { ListingSearchFiltersPage } from '../listing-search-filters/listing-search-filters.page';
 
 
 @NgModule({
@@ -20,7 +21,14 @@ import { ListingFiltersPage } from '../listing-filters/listing-filters-page';
       }
     ])
   ],
-  declarations: [HomePage, ListingFiltersPage],
-  entryComponents: [ListingFiltersPage]
+  declarations: [
+    HomePage,
+    ListingFiltersPage,
+    ListingSearchFiltersPage
+  ],
+  entryComponents: [
+    ListingFiltersPage,
+    ListingSearchFiltersPage
+  ]
 })
 export class HomePageModule {}

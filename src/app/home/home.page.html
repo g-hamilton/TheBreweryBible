@@ -10,6 +10,13 @@
       <ion-icon slot="start" name="md-map" (click)="viewMap()"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
+  <ion-searchbar
+  animated
+  showCancelButton="focus"
+  (ionChange)="onSeachbarChange()"
+  (search)="onSearch($event)"
+  (ionCancel)="onSearchCancel($event)"
+  ></ion-searchbar>
 </ion-header>
 
 <ion-content fullscreen>
@@ -36,7 +43,7 @@
     </ion-infinite-scroll>
 
     <!-- Ininite scroll when search is active -->
-    <ion-infinite-scroll *ngIf="searchActivated" (ionInfinite)="loadSearchListings($event)">
+    <ion-infinite-scroll *ngIf="searchActivated && !endOfSearchResults" (ionInfinite)="loadSearchListings($event)">
       <ion-infinite-scroll-content
         loadingText="Loading more venues...">
       </ion-infinite-scroll-content>

@@ -37,7 +37,7 @@ export class HomePage {
   private lastLocation: any;
   private searchQuery: string;
   public searchActivated: boolean;
-  private endOfSearchResults: boolean;
+  public endOfSearchResults: boolean;
   private searchResultsSnapshot: AlgoliaListing[];
   private tempSearchFilters: ListingFilters;
 
@@ -251,17 +251,18 @@ export class HomePage {
         this.ionContent.scrollToTop();
         this.listings = res;
         this.searchResultsSnapshot = res;
+        if (res.length < 20) {
+          this.endOfSearchResults = true;
+          console.log('End of search results prior to infinite scroll being used.');
+        }
       }
     }
 
-    async loadSearchListings(event?: IonInfiniteScroll) {
+    async loadSearchListings(event?: any) {
       /*
       Load a set of search result listings into the component for view.
       Called by infinite scroll in the HTML template to fetch listings in batches using pagination.
       */
-      if (this.listings.length < 20 || this.endOfSearchResults) {
-        return;
-      }
       this.paginationPage ++;
       const nextHits = await this.dataService.search(this.paginationPage, this.searchQuery);
       if (event && nextHits.length < 20) {
@@ -272,6 +273,8 @@ export class HomePage {
         this.listings = [];
       }
       this.listings = this.listings.concat(nextHits);
+      console.log('Event', event);
+      event.target.complete();
     }
 
     onSearchCancel() {
