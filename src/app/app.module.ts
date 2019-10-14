@@ -28,7 +28,7 @@ const firebaseConfig = {
   entryComponents: [],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({ swipeBackEnabled: false }), // Disable swipe to go back globally
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,

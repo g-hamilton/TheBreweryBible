@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MenuController } from '@ionic/angular';
 
 import { Plugins, StatusBarStyle } from '@capacitor/core';
 const { SplashScreen } = Plugins;
@@ -10,10 +11,16 @@ const { StatusBar } = Plugins;
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  constructor() {
+  constructor(
+    private menuCtrl: MenuController
+  ) {
     this.initialiseApp();
+  }
+
+  ngOnInit() {
+    this.menuCtrl.swipeGesture(false); // Disable swipe to open the side menu
   }
 
   async initialiseApp() {
