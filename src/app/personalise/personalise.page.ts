@@ -193,8 +193,9 @@ export class PersonalisePage implements OnInit {
         if (err.message === 'location unavailable') {
           // tslint:disable-next-line: max-line-length
           this.toastService.presentToast('Unable to retrieve your location at this time. Please check your device settings and allow location services to use this feature.', 0, 'danger');
+        } else {
+          this.toastService.presentToast(err.message, 0, 'danger');
         }
-        this.toastService.presentToast(err.message, 0, 'danger');
         this.slides.lockSwipeToNext(false);
         this.slides.slideNext();
       }
