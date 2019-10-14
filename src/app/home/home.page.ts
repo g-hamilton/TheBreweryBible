@@ -122,7 +122,7 @@ export class HomePage {
       .catch(err => console.error(err));
     }
 
-    async loadFilteredListings(event?: IonInfiniteScroll) {
+    async loadFilteredListings(event?: any) {
       /*
       Load a set of filtered listings into the component for view.
       Called by infinite scroll in the HTML template to fetch listings in batches using pagination.
@@ -130,7 +130,7 @@ export class HomePage {
       this.paginationPage ++;
       const nextHits = await this.dataService.getFilteredListings(this.listingFilters, this.paginationPage);
       if (event && nextHits.length === 0) {
-        event.disabled = true;
+        event.target.disabled = true;
         console.log('End of results. Infinite scroll disabled.');
         return;
       }
@@ -138,6 +138,9 @@ export class HomePage {
         this.listings = [];
       }
       this.listings = this.listings.concat(nextHits);
+      if (event) {
+        event.target.complete();
+      }
     }
 
     viewListing(listingID: string) {

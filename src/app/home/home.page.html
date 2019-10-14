@@ -29,13 +29,17 @@
     </ion-list>
 
     <!-- Ininite scroll for standard browsing (search not active) -->
-    <ion-infinite-scroll *ngIf="!searchActivated" (ionInfinite)="$event.waitFor(loadFilteredListings($event))">
-      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    <ion-infinite-scroll *ngIf="!searchActivated" (ionInfinite)="loadFilteredListings($event)">
+      <ion-infinite-scroll-content
+        loadingText="Loading more venues...">
+      </ion-infinite-scroll-content>
     </ion-infinite-scroll>
 
     <!-- Ininite scroll when search is active -->
-    <ion-infinite-scroll *ngIf="searchActivated" (ionInfinite)="$event.waitFor(loadSearchListings($event))">
-      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    <ion-infinite-scroll *ngIf="searchActivated" (ionInfinite)="loadSearchListings($event)">
+      <ion-infinite-scroll-content
+        loadingText="Loading more venues...">
+      </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </div>
 
