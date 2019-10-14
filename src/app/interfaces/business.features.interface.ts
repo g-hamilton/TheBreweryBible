@@ -1,0 +1,32 @@
+export interface BusinessFeatures {
+  isBrewer: {name?: string, id: string, selected: boolean, outline?: string};
+  isMicroBrewer: {name?: string, id: string, selected: boolean, outline?: string};
+  isBrewPub: {name?: string, id: string, selected: boolean, outline?: string};
+  isPub: {name?: string, id: string, selected: boolean, outline?: string};
+  isPopup: {name?: string, id: string, selected: boolean, outline?: string};
+  isStockist: {name?: string, id: string, selected: boolean, outline?: string};
+  canDrink: {name?: string, id: string, selected: boolean, outline?: string};
+  canShop: {name?: string, id: string, selected: boolean, outline?: string};
+  hasGarden: {name?: string, id: string, selected: boolean, outline?: string};
+  hasSports: {name?: string, id: string, selected: boolean, outline?: string};
+  hasDisabledAccess: {name?: string, id: string, selected: boolean, outline?: string};
+  isCaskMasqueAccredited: {name?: string, id: string, selected: boolean, outline?: string};
+  isFamilyFriendly: {name?: string, id: string, selected: boolean, outline?: string};
+  isPetFriendly: {name?: string, id: string, selected: boolean, outline?: string};
+  hasPoolTable: {name?: string, id: string, selected: boolean, outline?: string};
+  servesBreakfast: {name?: string, id: string, selected: boolean, outline?: string};
+  servesLunch: {name?: string, id: string, selected: boolean, outline?: string};
+  servesDinner: {name?: string, id: string, selected: boolean, outline?: string};
+  servesSnacks: {name?: string, id: string, selected: boolean, outline?: string};
+  hasLiveMusic: {name?: string, id: string, selected: boolean, outline?: string};
+  hasTours: {name?: string, id: string, selected: boolean, outline?: string};
+  hasTastings: {name?: string, id: string, selected: boolean, outline?: string};
+  hasMeetTheBrewer: {name?: string, id: string, selected: boolean, outline?: string};
+  hasTapTakeover: {name?: string, id: string, selected: boolean, outline?: string};
+  hasTaphouse: {name?: string, id: string, selected: boolean, outline?: string};
+  isBookingRequired: {name?: string, id: string, selected: boolean, outline?: string};
+  hasCask: {name?: string, id: string, selected: boolean, outline?: string};
+  hasKeg: {name?: string, id: string, selected: boolean, outline?: string};
+  hasSIBAMembership: {name?: string, id: string, selected: boolean, outline?: string};
+  hasCAMRAMembership: {name?: string, id: string, selected: boolean, outline?: string};
+}

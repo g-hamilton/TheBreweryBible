@@ -1,0 +1,100 @@
+<ion-content fullscreen>
+  <ion-slides pager id="slides">
+
+    <ion-slide>
+      <div id="slide-content">
+        <!-- <img id="slide-feature-img" src="../../assets/imgs/onboarding-bg1.jpg" /> -->
+        <h1>Select your region</h1>
+        <ion-item>
+          <ion-label> Country </ion-label>
+          <ion-select [(ngModel)]="selectedCountryCode" cancelText="Cancel" okText="Select" (ionChange)="onCountrySelect()">
+            <ion-select-option *ngFor="let key of objKeys(countries)" [value]="countries[key].code">{{ countries[key].emoji + ' ' + countries[key].name }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngIf="selectedCountryCode && regions">
+          <ion-label> Region </ion-label>
+          <ion-select [(ngModel)]="selectedRegionId" cancelText="Cancel" okText="Select">
+            <ion-select-option *ngFor="let key of objKeys(regions)" [value]="regions[key].id">{{ regions[key].name }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div id="slide-buttons">
+          <ion-button expand="block" shape="round" color="primary" [disabled]="!selectedCountryCode || !selectedRegionId" (click)="saveRegion()"> NEXT </ion-button>
+        </div>
+      </div>
+    </ion-slide>
+
+    <ion-slide>
+      <div id="slide-content">
+        <!-- <img id="slide-feature-img" src="../../assets/imgs/onboarding-bg1.jpg" /> -->
+        <h1>Discover</h1>
+        <p>Discover amazing places and spaces to experience great local beer.</p>
+        <div id="slide-buttons">
+          <ion-button expand="block" fill="clear" color="primary" (click)="skip()"> SKIP </ion-button>
+          <ion-button expand="block" shape="round" color="primary" class="global__btn-spacing" (click)="next()"> NEXT </ion-button>
+        </div>
+      </div>
+    </ion-slide>
+
+    <ion-slide>
+      <div id="slide-content">
+        <!-- <img id="slide-feature-img" src="../../assets/imgs/onboarding-bg1.jpg" /> -->
+        <h1>Find</h1>
+        <p>Tap into stockists and discover where to buy your favourite beers.</p>
+        <div id="slide-buttons">
+          <ion-button expand="block" fill="clear" color="primary" (click)="skip()"> SKIP </ion-button>
+          <ion-button expand="block" shape="round" color="primary" class="global__btn-spacing" (click)="next()"> NEXT </ion-button>
+        </div>
+      </div>
+    </ion-slide>
+
+    <ion-slide>
+      <div id="slide-content">
+        <!-- <img id="slide-feature-img" src="../../assets/imgs/onboarding-bg1.jpg" /> -->
+        <h1>Experience</h1>
+        <p>Experience brewery tours, tasting evenings & special events near you.</p>
+        <div id="slide-buttons">
+          <ion-button expand="block" fill="clear" color="primary" (click)="skip()"> SKIP </ion-button>
+          <ion-button expand="block" shape="round" color="primary" class="global__btn-spacing" (click)="next()"> NEXT </ion-button>
+        </div>
+      </div>
+    </ion-slide>
+
+    <ion-slide>
+      <div id="slide-content">
+        <!-- <img id="slide-feature-img" src="../../assets/imgs/onboarding-bg1.jpg" /> -->
+        <h1>Be The First</h1>
+        <p>Get notified as soon as new beers, venues, experiences & deals are released.</p>
+        <div id="slide-buttons">
+          <ion-button expand="block" fill="clear" color="primary" (click)="skip()"> SKIP </ion-button>
+          <ion-button expand="block" shape="round" color="primary" class="global__btn-spacing" (click)="next()"> NEXT </ion-button>
+        </div>
+      </div>
+    </ion-slide>
+
+    <ion-slide>
+      <div id="slide-content">
+        <!-- <img id="slide-feature-img" src="../../assets/imgs/onboarding-bg1.jpg" /> -->
+        <h1>Save</h1>
+        <p>Unlock rewards, tap into personalised special offers & save money!</p>
+        <div id="slide-buttons">
+          <ion-button expand="block" fill="clear" color="primary" (click)="skip()"> SKIP </ion-button>
+          <ion-button expand="block" shape="round" color="primary" class="global__btn-spacing" (click)="next()"> NEXT </ion-button>
+        </div>
+      </div>
+    </ion-slide>
+
+    <ion-slide>
+      <div id="slide-content">
+        <!-- <img id="slide-feature-img" src="../../assets/imgs/onboarding-bg1.jpg" /> -->
+        <h1>Make it yours</h1>
+        <p>Tell us a little about your likes for a personalised app experience...</p>
+        <div id="slide-buttons">
+          <ion-button expand="block" fill="clear" color="primary" (click)="exitOnboarding()"> NO THANKS </ion-button>
+          <ion-button expand="block" shape="round" color="primary" class="global__btn-spacing" (click)="personaliseApp()"> YES PLEASE! </ion-button>
+        </div>
+      </div>
+    </ion-slide>
+
+  </ion-slides>
+</ion-content>
+  

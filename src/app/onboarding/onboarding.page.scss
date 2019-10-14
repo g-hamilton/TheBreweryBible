@@ -1,0 +1,55 @@
+.scroll-content {
+    // Disable vertical scrolling
+    overflow-y: unset;
+    overflow-x: unset;
+
+    // Push the content up underneath the native status bar, as content 'fullscreen' only goes behind ion header.
+    padding-top: 0px !important;
+}
+
+#slides {
+    height: 100%;
+}
+ion-slide .slide-zoom {
+    height: 100%;
+}
+
+#slide-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 20px;
+    background: black;
+    text-align: left;
+}
+
+#slide-content h1 {
+    font-family: 'Microbrew';
+    font-size: 3em;
+    color: var(--ion-color-lightest);
+}
+
+#slide-content p {
+    color: var(--ion-color-medium);;
+    font-weight: 500;
+}
+
+#slide-buttons {
+    position: fixed;
+    bottom: 40px;
+    width: 90%;
+}
+
+.swiper-pagination-bullet {
+    background: var(--ion-color-lightest);
+}
+
+ion-item .label, ion-select .select-text {
+    color: var(--ion-color-medium);
+}
+
+ion-select .select-text {
+    color: var(--ion-color-lightest);
+}

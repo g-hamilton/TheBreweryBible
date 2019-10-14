@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card color="dark">
+    <ion-card-header>
+      <ion-card-title> Reset </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" (click)="resetOnboarding()"> RESET WELCOME TOUR </ion-button>
+      <ion-button expand="block" class="mt" (click)="resetStorage()"> RESET STORED DATA </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

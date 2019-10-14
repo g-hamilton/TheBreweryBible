@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="listing">
+  
+  <!-- Image Slider -->
+  <ion-slides pager id="main-slider">
+    <!-- Using dynamic bg image so we can use cover to display, keeping height while maintaining aspect ratio -->
+    <ion-slide *ngFor="let key of objKeys(listing.photos)" [ngStyle]="{'background-image': 'url('+ listing.photos[key].img +')'}">
+    </ion-slide>
+  </ion-slides>
+  
+</ion-content>

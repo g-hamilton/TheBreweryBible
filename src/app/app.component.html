@@ -1,0 +1,48 @@
+<ion-app>
+  <ion-split-pane>
+    <ion-menu type="overlay">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/home']">
+              <ion-icon slot="start" name="home"></ion-icon>
+              <ion-label>
+                Home
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item [routerDirection]="'forward'" [routerLink]="['/about']">
+              <ion-icon slot="start" name="hand"></ion-icon>
+              <ion-label>
+                Hello
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item [routerDirection]="'forward'" [routerLink]="['/settings']">
+              <ion-icon slot="start" name="settings"></ion-icon>
+              <ion-label>
+                Settings
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item href="javascript:void(0)" (click)="shareApp()">
+              <ion-icon slot="start" name="share-alt"></ion-icon>
+              <ion-label>
+                Share the app
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet main></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

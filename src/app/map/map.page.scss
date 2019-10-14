@@ -1,0 +1,7 @@
+#map-container {
+    height: 100%; // Mapbox map needs a height to display correctly.
+    width: 100%;
+}
+.no-scroll {
+    overflow: hidden;
+}

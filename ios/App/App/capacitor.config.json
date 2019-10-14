@@ -1,0 +1,17 @@
+{
+  "appId": "com.tbb.thebrewerybible",
+  "appName": "The Brewery Bible",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "backgroundColor": "#000000",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false,
+      "backgroundColor": "#000000",
+      "showSpinner": true,
+      "androidSpinnerStyle": "large",
+      "iosSpinnerStyle": "small"
+    }
+  }
+}
