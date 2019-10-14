@@ -26,17 +26,9 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 
-// Hide the swiper bullets for the optional slides on the onboarding slider
-.onboarding-slides {
-    height: 100%;
-    .swiper-pagination-bullet:nth-child(n + 6) {
-        display: none;
-    }
-}
-
 /* Custom spacings accessible in entire app */
 .mt {
-    margin-top: 1rem;
+    margin-top: 1em;
 }
 
 /* Toolbar titles entire app */
@@ -47,3 +39,74 @@ ion-toolbar ion-title {
 .card-content p {
     margin-bottom: 18px;
 }
+
+h1 {
+    font-family: 'Chunkfive';
+}
+h2 {
+    font-weight: 700;
+}
+.global__overflow-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/** Side Menu **/
+    .global__sidemenu {
+    font-family: 'Chunkfive';
+}
+
+/** Tags / Chips **/
+.global__features-tag {
+    background-color: var(--ion-color-dark);
+    border: 2px solid var(--ion-color-primary);
+    color: var(--ion-color-lightest);
+    height: 34px;
+    line-height: 28px;
+    font-family: 'Roboto';
+    font-size: 14px;
+    margin: 8px 8px 0 0;
+    ion-icon {
+        line-height: 32px;
+        margin: -2px;
+    }
+}
+
+/* Buttons */
+ion-header ion-icon.back-button-icon.icon, ion-header .back-button-text {
+    color: var(--ion-color-primary);
+}
+.global__btn_secondary {
+    color: var(--ion-color-lightest);
+    background-color: var(--ion-color-primary);
+    border-width: 3px;
+}
+.global__btn-spacing {
+    margin-top: 1em;
+}
+
+/* Popovers */
+.global__popover {
+    background-color: var(--ion-color-darkest);
+    color: var(--ion-color-lightest);
+    #closeBtn {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+.popover-ios .popover-arrow::after {
+    background-color: var(--ion-color-darkest);
+}
+
+/* Toasts */
+//   .global__toast-success .toast-wrapper {
+//     background-color: var(--ion-color-success);
+//   }
+//   .global__toast-danger .toast-wrapper {
+//     background-color: var(--ion-color-danger);
+//   }
+//   .global__toast-info .toast-wrapper {
+//     background-color: var(--ion-color-primary);
+//   }

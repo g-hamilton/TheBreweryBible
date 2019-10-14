@@ -5,6 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
+import { ListingFiltersPage } from '../listing-filters/listing-filters-page';
+
 
 @NgModule({
   imports: [
@@ -18,6 +20,7 @@ import { HomePage } from './home.page';
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, ListingFiltersPage],
+  entryComponents: [ListingFiltersPage]
 })
 export class HomePageModule {}

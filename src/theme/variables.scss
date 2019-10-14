@@ -4,38 +4,17 @@
 /** Custom Fonts **/
 
 @font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: bold;
-  src: url('../assets/fonts/poppins/Poppins-Bold.ttf');
-}
-
-@font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  src: url('../assets/fonts/poppins/Poppins-SemiBold.ttf');
-}
-
-@font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 500;
-  src: url('../assets/fonts/poppins/Poppins-Medium.ttf');
-}
-
-@font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: normal;
-  src: url('../assets/fonts/poppins/Poppins-Regular.ttf');
-}
-
-@font-face {
   font-family: 'Microbrew';
   font-style: normal;
   font-weight: normal;
   src: url('../assets/fonts/microbrew/Microbrew-One.otf');
+}
+
+@font-face {
+  font-family: 'Chunkfive';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../assets/fonts/chunkfive/Chunkfive.otf');
 }
 
 
@@ -147,7 +126,6 @@
 
   /** Theming - Entire app **/
   --ion-background-color: var(--ion-color-darkest);
-  --ion-font-family: 'Poppins';
   --ion-text-color: var(--ion-color-medium);
   --ion-toolbar-background: var(--ion-color-darkest);
   --ion-toolbar-color: var(--ion-color-light);

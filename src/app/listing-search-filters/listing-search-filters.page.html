@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons start>
+      <ion-button color="primary" (click)="reset()"> Reset </ion-button>
+    </ion-buttons>
+    <ion-title> Filter Within Search Results </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list no-lines>
+    <ion-list-header> By Venue Type </ion-list-header>
+    <ion-item>
+      <ion-label color="light"> Breweries </ion-label>
+      <ion-checkbox color="primary" [(ngModel)]="filters.features.isBrewer.selected"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label color="light"> Tap Rooms </ion-label>
+      <ion-checkbox color="primary" [(ngModel)]="filters.features.hasTaphouse.selected"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label color="light"> Pubs & Bars </ion-label>
+      <ion-checkbox color="primary" [(ngModel)]="filters.features.isPub.selected"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label color="light"> Brew Pubs </ion-label>
+      <ion-checkbox color="primary" [(ngModel)]="filters.features.isBrewPub.selected"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label color="light"> Stockists </ion-label>
+      <ion-checkbox color="primary" [(ngModel)]="filters.features.isStockist.selected"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="block" shape="round" (click)="applyFilters()"> APPLY </ion-button>
+</ion-content>

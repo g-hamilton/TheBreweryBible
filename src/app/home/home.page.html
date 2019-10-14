@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header #header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
@@ -7,11 +7,51 @@
       The Brewery Bible
     </ion-title>
     <ion-buttons slot="end">
-      <ion-icon name="star" (click)="viewMap()"></ion-icon>
+      <ion-icon slot="start" name="md-map" (click)="viewMap()"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
-  
+  <div *ngIf="listings && listings.length > 0 ; else noListings">
+    <ion-list>
+      <ion-item *ngFor="let listing of listings" id="listing-item" (click)="viewListing(listing.objectID)">
+        <img [src]="listing.featurePhotoUrl" id="img" />
+        <div id="overlay">
+          <div id="content">
+            <div id="title-container">
+              <h1 class="global__overflow-ellipsis">{{ listing.name }}</h1>
+            </div>
+            <h2>{{ listing.addressCity }}</h2>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+
+    <!-- Ininite scroll for standard browsing (search not active) -->
+    <ion-infinite-scroll *ngIf="!searchActivated" (ionInfinite)="$event.waitFor(loadFilteredListings($event))">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+    <!-- Ininite scroll when search is active -->
+    <ion-infinite-scroll *ngIf="searchActivated" (ionInfinite)="$event.waitFor(loadSearchListings($event))">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+
+  <!-- Template to show if no listings returned -->
+  <ng-template #noListings>
+    <div id="no-listings">
+      <p> No venues found. </p>
+      <p> Try adjusting your filters or searching again. </p>
+    </div>
+  </ng-template>
 </ion-content>
+
+<!-- Footer -->
+<ion-footer #footer>
+  <ion-button slot="center" id="filter-btn" shape="round" (click)="viewFilters()">
+    <ion-icon slot="start" name="md-funnel"></ion-icon>
+    Filter
+  </ion-button>
+</ion-footer>
