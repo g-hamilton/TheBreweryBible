@@ -31,10 +31,14 @@ export class OnboardingPage implements OnInit {
     private dataService: DataService
     ) { }
 
-  async ngOnInit() {
-    this.sideMenu.enable(false); // Disable the sidemenu
-    this.slides.lockSwipeToNext(true);
-    this.importSupportedCountries();
+  ngOnInit() {
+    try {
+      this.sideMenu.enable(false); // Disable the sidemenu
+      this.slides.lockSwipeToNext(true);
+      this.importSupportedCountries();
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   importSupportedCountries() {
@@ -76,12 +80,16 @@ export class OnboardingPage implements OnInit {
   }
 
   exitOnboarding() {
-    Storage.set({
-      key: 'onboardingComplete',
-      value: 'true'
-    })
-    .catch(err => alert(err));
-    this.router.navigate(['/home']);
+    try {
+      Storage.set({
+        key: 'onboardingComplete',
+        value: 'true'
+      });
+      this.sideMenu.enable(true); // re-enable the sidemenu
+      this.router.navigate(['/home']);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   personaliseApp() {

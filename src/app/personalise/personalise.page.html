@@ -1,9 +1,80 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>personalise</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content fullscreen>
+  <ion-slides pager id="slides" (ionSlideDidChange)="onSlideDidChange()">
 
-<ion-content>
+    <ion-slide>
+      <div id="slide-content">
+        <h1>How do you like to experience beer?</h1>
+        <div id="slide-tags">
+          <ion-chip
+          *ngFor="let key of objKeys(features)"
+          [ngClass]="{'activeChip': features[key].selected, 'inactiveChip': !features[key].selected}"
+          (click)="toggleExperience(key)"
+          ><ion-label>{{ features[key].name }}</ion-label>
+          </ion-chip>
+        </div>
+        <div id="slide-buttons">
+          <ion-button expand="block" fill="clear" color="primary" (click)="skip()"> SKIP </ion-button>
+          <ion-button expand="block" shape="round" color="primary" class="global__btn-spacing" (click)="saveExperience()">NEXT</ion-button>
+        </div>
+      </div>
+    </ion-slide>
 
+    <ion-slide>
+      <div id="slide-content">
+        <h1>Any favourite beer styles?</h1>
+        <div id="slide-tags">
+          <ion-chip
+          *ngFor="let key of objKeys(beerStyles)"
+          [ngClass]="{'activeChip': beerStyles[key].selected, 'inactiveChip': !beerStyles[key].selected}"
+          (click)="toggleBeerStyle(key)"
+          ><ion-label>{{ beerStyles[key].name }}</ion-label>
+          </ion-chip>
+        </div>
+        <div id="slide-buttons">
+          <ion-button expand="block" fill="clear" color="primary" (click)="skip()"> SKIP </ion-button>
+          <ion-button expand="block" shape="round" color="primary" class="global__btn-spacing" (click)="saveStyles()">NEXT</ion-button>
+        </div>
+      </div>
+    </ion-slide>
+
+    <ion-slide>
+      <div id="slide-content">
+        <h1>Cask or keg?</h1>
+        <div id="slide-tags">
+          <ion-chip
+          *ngFor="let key of objKeys(caskKeg)"
+          [ngClass]="{'activeChip': caskKeg[key].selected, 'inactiveChip': !caskKeg[key].selected}"
+          (click)="toggleCaskKeg(key)"
+          ><ion-label>{{ caskKeg[key].name }}</ion-label>
+          </ion-chip>
+        </div>
+        <div id="slide-buttons">
+          <ion-button expand="block" fill="clear" color="primary" (click)="skip()"> SKIP </ion-button>
+          <ion-button expand="block" shape="round" color="primary" class="global__btn-spacing" (click)="saveCaskKeg()">NEXT</ion-button>
+        </div>
+      </div>
+    </ion-slide>
+
+    <ion-slide>
+      <div id="slide-content">
+        <h1>Go local?</h1>
+        <p>Want to discover your nearest venues when using the app?</p>
+        <p>Enable geolocation when prompted...</p>
+        <div id="slide-buttons">
+          <ion-button expand="block" shape="round" color="primary" (click)="goLocal()">NEXT</ion-button>
+        </div>
+      </div>
+    </ion-slide>
+
+    <ion-slide>
+      <div id="slide-content">
+        <h1>That's it!</h1>
+        <p>App setup complete.</p>
+        <div id="slide-buttons">
+          <ion-button expand="block" shape="round" color="primary" (click)="onboardingComplete()">LET'S GO!</ion-button>
+        </div>
+      </div>
+    </ion-slide>
+
+  </ion-slides>
 </ion-content>
