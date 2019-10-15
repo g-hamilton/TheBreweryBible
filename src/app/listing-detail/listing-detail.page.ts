@@ -184,7 +184,7 @@ export class ListingDetailPage implements OnInit {
       const viewBeerModal = await this.modalCtrl.create({
         component: ViewBeerComponent,
         componentProps: {
-          item: this.beerInventory[index],
+          beer: this.beerInventory[index],
           beerTypes: this.beerTypes
         }
       });
