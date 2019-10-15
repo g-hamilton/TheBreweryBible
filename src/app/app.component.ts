@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 
-import { Plugins, StatusBarStyle } from '@capacitor/core';
+import { Plugins, StatusBarStyle, BrowserOpenOptions } from '@capacitor/core';
 const { SplashScreen } = Plugins;
 const { Share } = Plugins;
 const { StatusBar } = Plugins;
+const { Browser } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -33,6 +34,15 @@ export class AppComponent implements OnInit {
     } catch (err) {
       console.error(err);
     }
+  }
+
+  getTheBook() {
+    const options: BrowserOpenOptions = {
+      url: 'https://www.thebrewerybible.com/shop',
+      toolbarColor: '#000000'
+    };
+    Browser.open(options)
+    .catch(err => console.error(err));
   }
 
   async shareApp() {
