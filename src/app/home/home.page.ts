@@ -129,10 +129,9 @@ export class HomePage {
       */
       this.paginationPage ++;
       const nextHits = await this.dataService.getFilteredListings(this.listingFilters, this.paginationPage);
-      if (event && nextHits.length === 0) {
-        event.target.disabled = true;
+      if (nextHits.length < 20) {
+        this.endOfSearchResults = true;
         console.log('End of results. Infinite scroll disabled.');
-        return;
       }
       if (!this.listings) {
         this.listings = [];
