@@ -48,255 +48,244 @@ export class HomePage {
     private modalCtrl: ModalController
     ) {
       this.initialiseListings();
-    }
+  }
 
-    async initialiseListings() {
-      await this.loadingService.presentLoadingWithOptions('Loading...');
-      this.listingFilters = this.dataService.getDefaultListingFilters();
-      await this.checkPersonalisation();
-      await this.updateListingFilters();
-      await this.loadFilteredListings();
-      this.loadingService.dismissLoading();
-    }
+  async initialiseListings() {
+    await this.loadingService.presentLoadingWithOptions('Loading...');
+    this.listingFilters = this.dataService.getDefaultListingFilters();
+    await this.checkPersonalisation();
+    await this.updateListingFilters();
+    await this.loadFilteredListings();
+    this.loadingService.dismissLoading();
+  }
 
-    async checkPersonalisation() {
-      const resCountry = await Storage.get({ key: 'country'});
-      this.countryCode = resCountry.value;
-      console.log('Retreived country code:', this.countryCode);
-      const resRegion = await Storage.get({ key: 'region'});
-      this.regionId = resRegion.value;
-      console.log('Retreived region ID:', this.regionId);
-      const resExperiences = await Storage.get({ key: 'favouriteExperiences'});
-      this.prefExperience = JSON.parse(resExperiences.value);
-      console.log('Retreived user preferences - Experiences:', this.prefExperience);
-      const resBeerStyles = await Storage.get({ key: 'favouriteBeerStyles'});
-      this.prefBeerStyles = JSON.parse(resBeerStyles.value);
-      console.log('Retreived user preferences - Beer Styles:', this.prefBeerStyles);
-      const resCaskKeg = await Storage.get({ key: 'caskOrKeg'});
-      this.prefCaskKeg = JSON.parse(resCaskKeg.value);
-      console.log('Retreived user preferences - Cask/Keg:', this.prefCaskKeg);
-      const resLocation = await Storage.get({ key: 'lastLocation'});
-      this.lastLocation = JSON.parse(resLocation.value);
-      console.log('Retreived user last location:', this.lastLocation);
-    }
+  async checkPersonalisation() {
+    const resCountry = await Storage.get({ key: 'country'});
+    this.countryCode = resCountry.value;
+    console.log('Retreived country code:', this.countryCode);
+    const resRegion = await Storage.get({ key: 'region'});
+    this.regionId = resRegion.value;
+    console.log('Retreived region ID:', this.regionId);
+    const resExperiences = await Storage.get({ key: 'favouriteExperiences'});
+    this.prefExperience = JSON.parse(resExperiences.value);
+    console.log('Retreived user preferences - Experiences:', this.prefExperience);
+    const resBeerStyles = await Storage.get({ key: 'favouriteBeerStyles'});
+    this.prefBeerStyles = JSON.parse(resBeerStyles.value);
+    console.log('Retreived user preferences - Beer Styles:', this.prefBeerStyles);
+    const resCaskKeg = await Storage.get({ key: 'caskOrKeg'});
+    this.prefCaskKeg = JSON.parse(resCaskKeg.value);
+    console.log('Retreived user preferences - Cask/Keg:', this.prefCaskKeg);
+    const resLocation = await Storage.get({ key: 'lastLocation'});
+    this.lastLocation = JSON.parse(resLocation.value);
+    console.log('Retreived user last location:', this.lastLocation);
+  }
 
-    async updateListingFilters() {
-      if (this.prefExperience) {
-        // User has saved preferences from onboarding. Override defaults.
-        for (const key of Object.keys(this.prefExperience)) {
-          if (this.prefExperience[key].selected) {
-            this.listingFilters.features[key].selected = true;
-          } else {
-            this.listingFilters.features[key].selected = false;
-          }
-        }
-        /* TODO - Temp override to ensure we don't filter on tastings until we make tasting an inventory experience item */
-        this.listingFilters.features.hasTastings.selected = false;
-      }
-      if (this.countryCode && this.regionId) {
-        // User has saved country & region from onboarding. Override defaults.
-        this.listingFilters.countryCode = this.countryCode;
-        this.listingFilters.regionId = this.regionId;
-      }
-      console.log('Listing filters updated:', this.listingFilters);
-    }
-
-    storeFilters(data: ListingFilters) {
-      Storage.set({
-        key: 'favouriteExperiences',
-        value: JSON.stringify(data.features)
-      })
-      .then(() => console.log('Favourite experiences saved successfully to storage'))
-      .catch(err => console.error(err));
-      Storage.set({
-        key: 'country',
-        value: data.countryCode
-      })
-      .then(() => console.log('Country saved successfully to storage'))
-      .catch(err => console.error(err));
-      Storage.set({
-        key: 'region',
-        value: data.regionId
-      })
-      .then(() => console.log('Region saved successfully to storage'))
-      .catch(err => console.error(err));
-    }
-
-    async loadFilteredListings(event?: any) {
-      /*
-      Load a set of filtered listings into the component for view.
-      Called by infinite scroll in the HTML template to fetch listings in batches using pagination.
-      */
-      this.paginationPage ++;
-      const nextHits = await this.dataService.getFilteredListings(this.listingFilters, this.paginationPage);
-      if (nextHits.length < 20) {
-        this.endOfSearchResults = true;
-        console.log('End of results. Infinite scroll disabled.');
-      }
-      if (!this.listings) {
-        this.listings = [];
-      }
-      this.listings = this.listings.concat(nextHits);
-      if (event) {
-        event.target.complete();
-      }
-    }
-
-    viewListing(listingID: string) {
-      this.router.navigate([`/ListingDetailPage/${listingID}`]);
-    }
-
-    async viewFilters() {
-      /*
-      This method looks at whether or not a search is underway in order to launch the appropriate UI.
-      In browse mode, the filters call for new, filtered results.
-      In search mode, where the user has already received results from a search bar query, the filters
-      call for filtering on the existng result set (they do not call for new results from the server).
-      */
-      if (this.searchActivated) {
-        // Pop the modal to search within existing results.
-        // tslint:disable-next-line: max-line-length
-        const filters = this.tempSearchFilters ? this.dataService.deepObjClone(this.tempSearchFilters) : this.dataService.deepObjClone(this.listingFilters);
-        const modalOpts: ModalOptions = {
-          component: ListingSearchFiltersPage,
-          componentProps: {
-            filters
-          }
-        };
-        try {
-          const searchFiltersModal = await this.modalCtrl.create(modalOpts);
-          searchFiltersModal.onWillDismiss()
-          .then(res => {
-            const data = res.data;
-            if (data) {
-              console.log('Search filters modal dismissed with data:', data);
-              if (!this.dataService.deepObjCompare(this.listingFilters, data)) {
-                console.log('Search filters have been modified.');
-                this.filterWithinSearchResults(data);
-                this.tempSearchFilters = data;
-              }
-            }
-          });
-          return await searchFiltersModal.present();
-        } catch (err) {
-          console.error(err);
-        }
-      } else {
-        // Pop the modal to filter new results.
-        const modalOpts: ModalOptions = {
-          component: ListingFiltersPage,
-          componentProps: {
-            filters: this.dataService.deepObjClone(this.listingFilters)
-          }
-        };
-        try {
-          const filtersModal = await this.modalCtrl.create(modalOpts);
-          filtersModal.onWillDismiss()
-          .then(res => {
-            const data = res.data;
-            if (data) {
-              console.log('Filters modal dismissed with data:', data);
-              if (!this.dataService.deepObjCompare(this.listingFilters, data)) {
-                console.log('Filters have been modified.');
-                this.listingFilters = data;
-                this.paginationPage = -1;
-                this.listings = [];
-                this.ionContent.scrollToTop();
-                this.loadFilteredListings();
-                this.storeFilters(data);
-              }
-            }
-          });
-          return await filtersModal.present();
-        } catch (err) {
-          console.error(err);
+  async updateListingFilters() {
+    if (this.prefExperience) {
+      // User has saved preferences from onboarding. Override defaults.
+      for (const key of Object.keys(this.prefExperience)) {
+        if (this.prefExperience[key].selected) {
+          this.listingFilters.features[key].selected = true;
+        } else {
+          this.listingFilters.features[key].selected = false;
         }
       }
+      /* TODO - Temp override to ensure we don't filter on tastings until we make tasting an inventory experience item */
+      this.listingFilters.features.hasTastings.selected = false;
     }
+    if (this.countryCode && this.regionId) {
+      // User has saved country & region from onboarding. Override defaults.
+      this.listingFilters.countryCode = this.countryCode;
+      this.listingFilters.regionId = this.regionId;
+    }
+    console.log('Listing filters updated:', this.listingFilters);
+  }
 
-    filterWithinSearchResults(filters: ListingFilters) {
-      /*
-      Filters the existing set of search results.
-      Runs the filter on a snapshot of the search results & updates the listings, meaning new
-      filters can be run again and again on any one search result snapshot.
-      */
-      if (this.searchResultsSnapshot && this.searchResultsSnapshot.length > 0) {
-        const filtered = this.searchResultsSnapshot.filter(item => {
-          for (const key of Object.keys(filters.features)) {
-            if (item.businessFeatures[key]) {
-              if (item.businessFeatures[key].selected && filters.features[key].selected) {
-                return item;
-              }
+  storeFilters(data: ListingFilters) {
+    Storage.set({
+      key: 'favouriteExperiences',
+      value: JSON.stringify(data.features)
+    })
+    .then(() => console.log('Favourite experiences saved successfully to storage'))
+    .catch(err => console.error(err));
+    Storage.set({
+      key: 'country',
+      value: data.countryCode
+    })
+    .then(() => console.log('Country saved successfully to storage'))
+    .catch(err => console.error(err));
+    Storage.set({
+      key: 'region',
+      value: data.regionId
+    })
+    .then(() => console.log('Region saved successfully to storage'))
+    .catch(err => console.error(err));
+  }
+
+  async loadFilteredListings(event?: any) {
+    /*
+    Load a set of filtered listings into the component for view.
+    Called by infinite scroll in the HTML template to fetch listings in batches using pagination.
+    */
+    this.paginationPage ++;
+    const nextHits = await this.dataService.getFilteredListings(this.listingFilters, this.paginationPage);
+    if (nextHits.length < 20) {
+      this.endOfSearchResults = true;
+      console.log('End of results. Infinite scroll disabled.');
+    }
+    if (!this.listings) {
+      this.listings = [];
+    }
+    this.listings = this.listings.concat(nextHits);
+    if (event) {
+      event.target.complete();
+    }
+  }
+
+  viewListing(listingID: string) {
+    this.router.navigate([`/listing/${listingID}`])
+    .catch(err => console.error(err));
+  }
+
+  async viewFilters() {
+    /*
+    This method looks at whether or not a search is underway in order to launch the appropriate UI.
+    In browse mode, the filters call for new, filtered results.
+    In search mode, where the user has already received results from a search bar query, the filters
+    call for filtering on the existng result set (they do not call for new results from the server).
+    */
+    if (this.searchActivated) {
+      // Pop the modal to search within existing results.
+      // tslint:disable-next-line: max-line-length
+      const filters = this.tempSearchFilters ? this.dataService.deepObjClone(this.tempSearchFilters) : this.dataService.deepObjClone(this.listingFilters);
+      const modalOpts: ModalOptions = {
+        component: ListingSearchFiltersPage,
+        componentProps: {
+          filters
+        }
+      };
+      try {
+        const searchFiltersModal = await this.modalCtrl.create(modalOpts);
+        searchFiltersModal.onWillDismiss()
+        .then(res => {
+          const data = res.data;
+          if (data) {
+            console.log('Search filters modal dismissed with data:', data);
+            if (!this.dataService.deepObjCompare(this.listingFilters, data)) {
+              console.log('Search filters have been modified.');
+              this.filterWithinSearchResults(data);
+              this.tempSearchFilters = data;
             }
           }
         });
-        this.listings = filtered;
-      } else {
-        alert('No results to filter. Try a new search or change your browsing filters');
+        return await searchFiltersModal.present();
+      } catch (err) {
+        console.error(err);
       }
-    }
-
-    onSeachbarChange() {
-      this.paginationPage = -1;
-    }
-
-    async onSearch(ev: any) {
-      this.searchQuery = ev.target.value;
-      if (this.searchQuery) { // Workaround for (ionCancel) calling (ionSearch) in the searchbar component.
-        this.searchActivated = true;
-        this.endOfSearchResults = false;
-        this.paginationPage ++;
-        const res = await this.dataService.search(this.paginationPage, this.searchQuery);
-        this.ionContent.scrollToTop();
-        this.listings = res;
-        this.searchResultsSnapshot = res;
-        if (res.length < 20) {
-          this.endOfSearchResults = true;
-          console.log('End of search results prior to infinite scroll being used.');
+    } else {
+      // Pop the modal to filter new results.
+      const modalOpts: ModalOptions = {
+        component: ListingFiltersPage,
+        componentProps: {
+          filters: this.dataService.deepObjClone(this.listingFilters)
         }
+      };
+      try {
+        const filtersModal = await this.modalCtrl.create(modalOpts);
+        filtersModal.onWillDismiss()
+        .then(res => {
+          const data = res.data;
+          if (data) {
+            console.log('Filters modal dismissed with data:', data);
+            if (!this.dataService.deepObjCompare(this.listingFilters, data)) {
+              console.log('Filters have been modified.');
+              this.listingFilters = data;
+              this.paginationPage = -1;
+              this.listings = [];
+              this.ionContent.scrollToTop();
+              this.loadFilteredListings();
+              this.storeFilters(data);
+            }
+          }
+        });
+        return await filtersModal.present();
+      } catch (err) {
+        console.error(err);
       }
     }
+  }
 
-    async loadSearchListings(event?: any) {
-      /*
-      Load a set of search result listings into the component for view.
-      Called by infinite scroll in the HTML template to fetch listings in batches using pagination.
-      */
+  filterWithinSearchResults(filters: ListingFilters) {
+    /*
+    Filters the existing set of search results.
+    Runs the filter on a snapshot of the search results & updates the listings, meaning new
+    filters can be run again and again on any one search result snapshot.
+    */
+    if (this.searchResultsSnapshot && this.searchResultsSnapshot.length > 0) {
+      const filtered = this.searchResultsSnapshot.filter(item => {
+        for (const key of Object.keys(filters.features)) {
+          if (item.businessFeatures[key]) {
+            if (item.businessFeatures[key].selected && filters.features[key].selected) {
+              return item;
+            }
+          }
+        }
+      });
+      this.listings = filtered;
+    } else {
+      alert('No results to filter. Try a new search or change your browsing filters');
+    }
+  }
+
+  onSeachbarChange() {
+    this.paginationPage = -1;
+  }
+
+  async onSearch(ev: any) {
+    this.searchQuery = ev.target.value;
+    if (this.searchQuery) { // Workaround for (ionCancel) calling (ionSearch) in the searchbar component.
+      this.searchActivated = true;
+      this.endOfSearchResults = false;
       this.paginationPage ++;
-      const nextHits = await this.dataService.search(this.paginationPage, this.searchQuery);
-      if (event && nextHits.length < 20) {
+      const res = await this.dataService.search(this.paginationPage, this.searchQuery);
+      this.ionContent.scrollToTop();
+      this.listings = res;
+      this.searchResultsSnapshot = res;
+      if (res.length < 20) {
         this.endOfSearchResults = true;
-        console.log('End of search results. Infinite scroll will not be called again.');
-      }
-      if (!this.listings) {
-        this.listings = [];
-      }
-      this.listings = this.listings.concat(nextHits);
-      console.log('Event', event);
-      event.target.complete();
-    }
-
-    onSearchCancel(event?: any) {
-      if (this.searchActivated) {
-        this.paginationPage = -1;
-        this.listings = [];
-        this.ionContent.scrollToTop();
-        this.loadFilteredListings();
-        this.searchActivated = false;
+        console.log('End of search results prior to infinite scroll being used.');
       }
     }
+  }
 
-  // async viewListing(listing: Listing) {
-  //   try {
-  //     Storage.set({
-  //       key: 'selectedListing',
-  //       value: JSON.stringify(listing)
-  //     });
-  //     this.router.navigate(['/listing', listing.name]);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // }
+  async loadSearchListings(event?: any) {
+    /*
+    Load a set of search result listings into the component for view.
+    Called by infinite scroll in the HTML template to fetch listings in batches using pagination.
+    */
+    this.paginationPage ++;
+    const nextHits = await this.dataService.search(this.paginationPage, this.searchQuery);
+    if (event && nextHits.length < 20) {
+      this.endOfSearchResults = true;
+      console.log('End of search results. Infinite scroll will not be called again.');
+    }
+    if (!this.listings) {
+      this.listings = [];
+    }
+    this.listings = this.listings.concat(nextHits);
+    console.log('Event', event);
+    event.target.complete();
+  }
+
+  onSearchCancel(event?: any) {
+    if (this.searchActivated) {
+      this.paginationPage = -1;
+      this.listings = [];
+      this.ionContent.scrollToTop();
+      this.loadFilteredListings();
+      this.searchActivated = false;
+    }
+  }
 
   viewMap() {
     const extras: NavigationExtras = {
