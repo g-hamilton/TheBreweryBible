@@ -3,16 +3,179 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)">
+        <ion-icon slot="start" name="more"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="listing">
-  
+<ion-content fullscreen>
+
   <!-- Image Slider -->
-  <ion-slides pager id="main-slider">
+  <ion-slides pager *ngIf="listing" id="main-slider">
     <!-- Using dynamic bg image so we can use cover to display, keeping height while maintaining aspect ratio -->
     <ion-slide *ngFor="let key of objKeys(listing.photos)" [ngStyle]="{'background-image': 'url('+ listing.photos[key].img +')'}">
     </ion-slide>
   </ion-slides>
-  
+
+  <section *ngIf="listing" class="global__padding">
+
+    <!-- Name & Location -->
+    <ion-card color="dark">
+      <ion-card-content>
+        <h1 *ngIf="listing.name">{{ listing.name }}</h1>
+        <h2 *ngIf="listing.addressCity && listing.addressCounty">{{ listing.addressCity + ', ' + listing.addressCounty }}</h2>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Features -->
+    <ion-card *ngIf="listing.businessFeatures" color="dark">
+      <ion-card-content>
+        <ion-chip *ngFor="let feature of filterFeatures()" class="global__features-tag">
+          <ion-icon [name]="getIcon(feature)"></ion-icon>
+          <ion-label *ngIf="businessFeatures" id="business-feature-tag-name">{{ businessFeatures[feature.id].name }}</ion-label>
+        </ion-chip>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- About -->
+    <ion-card *ngIf="listing.aboutText" color="dark">
+      <ion-card-content>
+        <ion-card-title>About the {{ listing.businessFeatures.isBrewer.selected ? 'brewery' : 'venue' }}</ion-card-title>
+        <div [className]="expandAboutSection ? 'expanded' : 'collapsed-about'">{{ listing.aboutText }}</div>
+        <ion-button fill="clear" class="toggle-section-btn" (click)="toggleAboutSection()">
+          {{ expandAboutSection ? 'Less' : 'More' }}
+          <ion-icon slot="end" [name]="expandAboutSection ? 'arrow-up' : 'arrow-down'"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Mission Statement -->
+    <ion-card *ngIf="listing.missionStatement" color="dark">
+      <ion-card-content>
+        <ion-card-title>Mission statement</ion-card-title>
+        <div [className]="expandMissionSection ? 'expanded' : 'collapsed-about'">{{ listing.missionStatement }}</div>
+        <ion-button fill="outline" class="toggle-section-btn" (click)="toggleMissionSection()">
+          {{ expandMissionSection ? 'Less' : 'More' }}
+          <ion-icon slot="end" [name]="expandMissionSection ? 'arrow-up' : 'arrow-down'"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Beer Inventory -->
+    <ion-card color="dark" *ngIf="listing.inventory && listing.inventory.beers">
+      <ion-card-content>
+        <ion-card-title>Discover the beers</ion-card-title>
+        <ion-list>
+          <ion-item color="dark" *ngFor="let beer of beerInventory ; let i = index" (click)="viewBeer(i)">
+            <ion-avatar item-start>
+              <img [src]="beer.image.img">
+            </ion-avatar>
+            <h2>{{ beer.name }}</h2>
+            <p>{{ getBeerTypeName(beer.type) + ' • ' + beer.abv + '%' }}</p>
+            <ion-button fill="clear" slot="end">View</ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Opening Times -->
+    <ion-card *ngIf="listing.businessHours" color="dark">
+      <ion-card-content>
+        <ion-card-title>Opening times</ion-card-title>
+        <div [className]="expandHoursSection ? 'expanded' : 'collapsed-hours'">
+          <ion-list>
+            <ion-item color="dark">
+              <ion-row>
+                <ion-col width-50>
+                  Monday
+                </ion-col>
+                <ion-col width-50>
+                  {{ listing.businessHours.monday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.monday.lower) + ' - ' + transformTimeForUI(listing.businessHours.monday.upper) }}
+                </ion-col>
+              </ion-row>
+            </ion-item>
+            <ion-item color="dark">
+              <ion-row>
+                <ion-col width-50>
+                  Tuesday
+                </ion-col>
+                <ion-col width-50>
+                    {{ listing.businessHours.tuesday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.tuesday.lower) + ' - ' + transformTimeForUI(listing.businessHours.tuesday.upper) }}
+                </ion-col>
+              </ion-row>
+            </ion-item>
+            <ion-item color="dark">
+              <ion-row>
+                <ion-col width-50>
+                  Wednesday
+                </ion-col>
+                <ion-col width-50>
+                    {{ listing.businessHours.wednesday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.wednesday.lower) + ' - ' + transformTimeForUI(listing.businessHours.wednesday.upper) }}
+                </ion-col>
+              </ion-row>
+            </ion-item>
+            <ion-item color="dark">
+              <ion-row>
+                <ion-col width-50>
+                  Thursday
+                </ion-col>
+                <ion-col width-50>
+                    {{ listing.businessHours.thursday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.thursday.lower) + ' - ' + transformTimeForUI(listing.businessHours.thursday.upper) }}
+                </ion-col>
+              </ion-row>
+            </ion-item>
+            <ion-item color="dark">
+              <ion-row>
+                <ion-col width-50>
+                  Friday
+                </ion-col>
+                <ion-col width-50>
+                    {{ listing.businessHours.friday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.friday.lower) + ' - ' + transformTimeForUI(listing.businessHours.friday.upper) }}
+                </ion-col>
+              </ion-row>
+            </ion-item>
+            <ion-item color="dark">
+              <ion-row>
+                <ion-col width-50>
+                  Saturday
+                </ion-col>
+                <ion-col width-50>
+                    {{ listing.businessHours.saturday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.saturday.lower) + ' - ' + transformTimeForUI(listing.businessHours.saturday.upper) }}
+                </ion-col>
+              </ion-row>
+            </ion-item>
+            <ion-item color="dark">
+              <ion-row>
+                <ion-col width-50>
+                  Sunday
+                </ion-col>
+                <ion-col width-50>
+                    {{ listing.businessHours.sunday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.sunday.lower) + ' - ' + transformTimeForUI(listing.businessHours.sunday.upper) }}
+                </ion-col>
+              </ion-row>
+            </ion-item>
+          </ion-list>
+        </div>
+        <ion-button fill="clear" class="toggle-section-btn" (click)="toggleHoursSection()">
+          {{ expandHoursSection ? 'Close' : 'View' }}
+          <ion-icon slot="end" [name]="expandHoursSection ? 'arrow-up' : 'arrow-down'"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Highlights -->
+    <ion-card color="dark" *ngIf="listing.dateEstablished || listing.totalBeersProduced || listing.hlPerYear">
+      <ion-card-content>
+        <ion-card-title>Highlights</ion-card-title>
+        <p *ngIf="listing.dateEstablished"><span class="strong">Established:</span> {{ listing.dateEstablished }}</p>
+        <p *ngIf="listing.totalBeersProduced"><span class="strong">Beers produced:</span> {{ listing.totalBeersProduced }}</p>
+        <p *ngIf="listing.hlPerYear"><span class="strong">Production volume:</span> {{ listing.hlPerYear }} hecto-litres per year</p>
+      </ion-card-content>
+    </ion-card>
+
+  </section>
+
 </ion-content>

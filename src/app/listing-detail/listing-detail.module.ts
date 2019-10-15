@@ -7,6 +7,10 @@ import { IonicModule } from '@ionic/angular';
 
 import { ListingDetailPage } from './listing-detail.page';
 
+// Modal & popover component imports
+import { ViewBeerComponent } from '../view-beer/view-beer.component';
+import { ListingDetailMoreComponent } from '../listing-detail-more/listing-detail-more.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -21,6 +25,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ListingDetailPage]
+  declarations: [ListingDetailPage, ViewBeerComponent, ListingDetailMoreComponent],
+  entryComponents: [ViewBeerComponent, ListingDetailMoreComponent]
 })
 export class ListingDetailPageModule {}

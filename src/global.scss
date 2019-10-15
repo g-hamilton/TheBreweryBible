@@ -116,3 +116,48 @@ ion-searchbar.sc-ion-searchbar-ios-h {
     --background: var(--ion-color-dark);
     --cancel-button-color: var(--ion-color-primary);
 }
+
+/* Maps */
+
+// The overall popup container
+.mapboxgl-popup {
+    max-width: 400px;
+}
+// The popup tip / anchor
+.mapboxgl-popup-tip {
+    border-top-color: var(--ion-color-darkest) !important;
+}
+// The popup content
+.mapboxgl-popup-content {
+    border-radius: 6px;
+    background-color: var(--ion-color-darkest);
+}
+// The popup close button
+.mapboxgl-popup-close-button {
+    color: var(--ion-color-lightest);
+    font-size: 2.2em;
+}
+// Custom inner content container
+#popup-inner-content {
+    //
+}
+// Custom popup image
+#popup-img {
+    width: 160px;
+    height: 160px;
+    border-radius: 6px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+// Custom button to view detail
+#popup-view-detail-button {
+    display: block;
+    margin: 10px auto 0 auto;
+    width: 100%;
+    height: 40px;
+    background-color: var(--ion-color-primary);
+    color: var(--ion-color-lightest);
+    border-radius: 60px;
+    font-size: 1.4em
+}

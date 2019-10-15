@@ -1,7 +1,64 @@
 #main-slider {
-    height: 260px;
-    ion-slide {
-      background-size: cover;
-      background-position: center;
-    }
+  height: 240px;
+  ion-slide {
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+h2 {
+  color: var(--ion-color-medium);
+  font-size: 1.8rem;
+}
+
+// Collapsible Section
+// Note: Transition height doesn't work. Use max height. Double the line height for 2 rows etc.
+.collapsed-features {
+  line-height: 28px;
+  max-height: 90px;
+  overflow: hidden;
+  transition: max-height 0.25s ease-out;
+}
+.collapsed-about {
+  line-height: 18px;
+  max-height: 54px;
+  overflow: hidden;
+  transition: max-height 0.25s ease-out;
+}
+.collapsed-hours {
+  line-height: 18px;
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.25s ease-out;
+}
+.expanded {
+  overflow: visible;
+  max-height: 1000px; // Set a value bigger than we'll ever need
+  transition: max-height 0.25s ease-in;
+}
+.toggle-section-btn {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// All cards
+.card {
+  box-shadow: none;
+
+  .card-title {
+    font-family: 'Chunkfive';
+  }
+
+  h2 {
+    color: var(--ion-color-medium);
+  }
+}
+
+.strong {
+  font-weight: bold;
+}
+
+#business-feature-tag-name {
+  text-transform: capitalize;
 }
