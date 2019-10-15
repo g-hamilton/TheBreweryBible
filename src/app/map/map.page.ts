@@ -55,7 +55,6 @@ export class MapPage implements OnInit {
 
   ionViewDidEnter() {
     console.log('Hello ionViewDidEnter MapPage');
-    // this.importListingData();
   }
 
   async importUserLocation() {
@@ -205,6 +204,9 @@ export class MapPage implements OnInit {
         this.router.navigate([`listing/${listingID}`]);
       });
       popupInnerContent.appendChild(popupBtn);
+
+      // Pan to marker location
+      this.map.panTo(coordinates);
 
       // Set the popup
       new mapboxgl.Popup()

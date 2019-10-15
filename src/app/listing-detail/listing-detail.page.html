@@ -86,7 +86,7 @@
       <ion-card-content>
         <ion-list>
           <ion-item color="dark" *ngFor="let beer of beerInventory ; let i = index" (click)="viewBeer(i)">
-            <ion-avatar item-start>
+            <ion-avatar slot="start">
               <img [src]="beer.image.img">
             </ion-avatar>
             <h2>{{ beer.name }}</h2>

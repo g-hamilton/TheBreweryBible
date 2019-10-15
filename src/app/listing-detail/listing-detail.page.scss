@@ -11,6 +11,12 @@ h2 {
   font-size: 1.8rem;
 }
 
+ion-item {
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-end: 0;
+}
+
 // Collapsible Section
 // Note: Transition height doesn't work. Use max height. Double the line height for 2 rows etc.
 .collapsed-features {
