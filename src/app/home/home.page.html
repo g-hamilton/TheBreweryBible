@@ -11,6 +11,7 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-searchbar
+  id="global__custom-searchbar"
   animated
   showCancelButton="focus"
   (ionChange)="onSeachbarChange()"
@@ -22,7 +23,7 @@
 <ion-content fullscreen>
   <div *ngIf="listings && listings.length > 0 ; else noListings">
     <ion-list>
-      <ion-item *ngFor="let listing of listings" id="listing-item" (click)="viewListing(listing.objectID)">
+      <ion-item *ngFor="let listing of listings" id="listing-item" class="ion-no-padding" (click)="viewListing(listing.objectID)">
         <img [src]="listing.featurePhotoUrl" id="img" />
         <div id="overlay">
           <div id="content">

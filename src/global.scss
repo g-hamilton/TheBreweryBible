@@ -36,14 +36,11 @@ ion-toolbar ion-title {
     font-family: 'Microbrew';
 }
 
-.card-content p {
-    margin-bottom: 18px;
-}
-
 h1 {
     font-family: 'Chunkfive';
 }
 h2 {
+    font-size: 1em;
     font-weight: 700;
 }
 .global__overflow-ellipsis {
@@ -53,8 +50,9 @@ h2 {
 }
 
 /** Side Menu **/
-    .global__sidemenu {
+#global__sidemenu-label {
     font-family: 'Chunkfive';
+    color: var(--ion-color-lightest);
 }
 
 /** Tags / Chips **/
@@ -100,21 +98,11 @@ ion-header ion-icon.back-button-icon.icon, ion-header .back-button-text {
     background-color: var(--ion-color-darkest);
 }
 
-/* Toasts */
-//   .global__toast-success .toast-wrapper {
-//     background-color: var(--ion-color-success);
-//   }
-//   .global__toast-danger .toast-wrapper {
-//     background-color: var(--ion-color-danger);
-//   }
-//   .global__toast-info .toast-wrapper {
-//     background-color: var(--ion-color-primary);
-//   }
-
 /* Searchbars */
-ion-searchbar.sc-ion-searchbar-ios-h {
+#global__custom-searchbar {
     --background: var(--ion-color-dark);
     --cancel-button-color: var(--ion-color-primary);
+    background-color: var(--ion-color-darkest);
 }
 
 /* Maps */
@@ -160,4 +148,9 @@ ion-searchbar.sc-ion-searchbar-ios-h {
     color: var(--ion-color-lightest);
     border-radius: 60px;
     font-size: 1.4em
+}
+
+ion-item {
+    --detail-icon-color: var(--ion-color-medium);
+    --detail-icon-opacity: 1;
 }

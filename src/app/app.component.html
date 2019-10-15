@@ -12,7 +12,7 @@
           <ion-menu-toggle auto-hide="false">
             <ion-item [routerDirection]="'root'" [routerLink]="['/home']">
               <!-- <ion-icon slot="start" name="home"></ion-icon> -->
-              <ion-label>
+              <ion-label id="global__sidemenu-label">
                 Home
               </ion-label>
             </ion-item>
@@ -21,7 +21,7 @@
           <ion-menu-toggle auto-hide="false">
             <ion-item [routerDirection]="'forward'" [routerLink]="['/about']">
               <!-- <ion-icon slot="start" name="beer"></ion-icon> -->
-              <ion-label>
+              <ion-label id="global__sidemenu-label">
                 About The Brewery Bible
               </ion-label>
             </ion-item>
@@ -30,7 +30,7 @@
           <ion-menu-toggle auto-hide="false">
             <ion-item (click)="getTheBook()" [routerLink]="['']">
               <!-- <ion-icon slot="start" name="book"></ion-icon> -->
-              <ion-label>
+              <ion-label id="global__sidemenu-label">
                 Get The Book
               </ion-label>
             </ion-item>
@@ -39,7 +39,7 @@
           <ion-menu-toggle auto-hide="false">
             <ion-item [routerDirection]="'forward'" [routerLink]="['/settings']">
               <!-- <ion-icon slot="start" name="settings"></ion-icon> -->
-              <ion-label>
+              <ion-label id="global__sidemenu-label">
                 App Settings
               </ion-label>
             </ion-item>
@@ -48,7 +48,7 @@
           <ion-menu-toggle auto-hide="false">
             <ion-item href="javascript:void(0)" (click)="shareApp()">
               <!-- <ion-icon slot="start" name="share-alt"></ion-icon> -->
-              <ion-label>
+              <ion-label id="global__sidemenu-label">
                 Share The App
               </ion-label>
             </ion-item>
