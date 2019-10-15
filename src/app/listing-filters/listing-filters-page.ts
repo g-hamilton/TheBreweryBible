@@ -78,7 +78,6 @@ export class ListingFiltersPage implements OnInit {
         }
       ]
     });
-
     await alert.present();
   }
 

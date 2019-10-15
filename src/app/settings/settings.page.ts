@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 
 import { Plugins } from '@capacitor/core';
 const { Storage } = Plugins;
 
 import { ToastService } from '../services/toast.service';
+
 
 @Component({
   selector: 'app-settings',
@@ -12,7 +14,10 @@ import { ToastService } from '../services/toast.service';
 })
 export class SettingsPage implements OnInit {
 
-  constructor(private toastService: ToastService) { }
+  constructor(
+    private toastService: ToastService,
+    private alertCtrl: AlertController
+    ) { }
 
   ngOnInit() {
   }
@@ -39,6 +44,30 @@ export class SettingsPage implements OnInit {
     } catch (err) {
       await this.toastService.presentToast(`Oops! ${err}`, 0, 'danger');
     }
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertCtrl.create({
+      header: 'Are you sure?',
+      message: 'This will reset all saved data & personalisation settings. <strong>It cannot be undone!</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Confirm Cancelled');
+          }
+        }, {
+          text: 'Reset',
+          cssClass: 'danger',
+          handler: () => {
+            // Reset
+            this.resetStorage();
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
 }
