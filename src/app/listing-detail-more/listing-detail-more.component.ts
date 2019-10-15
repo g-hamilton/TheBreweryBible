@@ -1,6 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
 
-import { AlgoliaListing } from '../interfaces/algolia.listing.interface';
+import { Plugins, BrowserOpenOptions } from '@capacitor/core';
+const { Browser } = Plugins;
+
+import { Listing } from '../interfaces/listing.interface';
+
 
 @Component({
   selector: 'app-listing-detail-more',
@@ -9,12 +14,31 @@ import { AlgoliaListing } from '../interfaces/algolia.listing.interface';
 })
 export class ListingDetailMoreComponent implements OnInit {
 
-  @Input() listing: AlgoliaListing;
+  @Input() listing: Listing;
 
-  constructor() { }
+  constructor(private popoverCtrl: PopoverController) { }
 
   ngOnInit() {
     console.log('Input:', this.listing);
+  }
+
+  async openBrowser(url: string) {
+    /*
+    Note: Only HTTP and HTTPS URLs are supported
+    */
+    if (!url.includes('http://') || !url.includes('https://')) {
+      url = 'http://' + url;
+    }
+    const options: BrowserOpenOptions = {
+      url,
+      toolbarColor: '#000000'
+    };
+    await Browser.open(options);
+  }
+
+  async close() {
+    this.popoverCtrl.dismiss()
+    .catch(err => console.error(err));
   }
 
 }

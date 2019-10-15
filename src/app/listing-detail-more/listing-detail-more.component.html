@@ -1,3 +1,31 @@
-<p>
-  listing-detail-more works!
-</p>
+<div padding *ngIf="listing">
+
+  <p>Contact {{ listing.name }}</p>
+
+  <ion-button *ngIf="listing.phone" expand="block" shape="round" href="tel:{{listing.phone}}">
+    <ion-icon slot="start" name="call"></ion-icon>
+    Phone
+  </ion-button>
+  <ion-button *ngIf="listing.website" expand="block" shape="round" class="mt" (click)="openBrowser(listing.website)">
+    <ion-icon slot="start" name="navigate"></ion-icon>
+    Website
+  </ion-button>
+  <ion-button *ngIf="listing.publicEmail" expand="block" shape="round" class="mt" href="mailto:{{listing.publicEmail}}??Subject=Enquiry%20From%20The%20Brewery%20Bible">
+    <ion-icon slot="start" name="at"></ion-icon>
+    Email
+  </ion-button>
+  <ion-button *ngIf="listing.facebook" expand="block" shape="round" class="mt" (click)="openBrowser('https://facebook.com/' + listing.facebook)">
+    <ion-icon slot="start" name="logo-facebook"></ion-icon>
+    Facebook
+  </ion-button>
+  <ion-button *ngIf="listing.twitter" expand="block" shape="round" class="mt" (click)="openBrowser('https://twitter.com/' + listing.twitter)">
+    <ion-icon slot="start" name="logo-twitter"></ion-icon>
+    Twitter
+  </ion-button>
+  <ion-button *ngIf="listing.instagram" expand="block" shape="round" class="mt" (click)="openBrowser('https://instagram.com/' + listing.instagram)">
+    <ion-icon slot="start" name="logo-instagram"></ion-icon>
+    Instagram
+  </ion-button>
+  <ion-button expand="block" shape="round" fill="clear" class="mt" (click)="close()">Close</ion-button>
+  
+</div>
