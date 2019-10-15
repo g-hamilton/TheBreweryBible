@@ -1,18 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons start>
+    <ion-buttons slot="start">
       <ion-button color="primary" (click)="reset()"> Reset </ion-button>
     </ion-buttons>
     <ion-title> Filter Within Search Results </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="cancel()">
+      <ion-button slot="end" (click)="cancel()">
         <ion-icon name="close"></ion-icon>
-      </button>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="ion-padding">
   <ion-list no-lines>
     <ion-list-header> By Venue Type </ion-list-header>
     <ion-item>

@@ -150,7 +150,19 @@ ion-header ion-icon.back-button-icon.icon, ion-header .back-button-text {
     font-size: 1.4em
 }
 
+/* Ion items */
 ion-item {
     --detail-icon-color: var(--ion-color-medium);
     --detail-icon-opacity: 1;
+}
+
+/* Lists */
+ion-list-header {
+    --color: var(--ion-color-lightest);
+}
+
+/* Checkboxes */
+ion-checkbox {
+    --background: var(--ion-color-dark);
+    --border-color: var(--ion-color-mediumdark);
 }
