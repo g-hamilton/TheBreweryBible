@@ -57,7 +57,7 @@
       <ion-card-content>
         <ion-card-title>Mission statement</ion-card-title>
         <div [className]="expandMissionSection ? 'expanded' : 'collapsed-about'">{{ listing.missionStatement }}</div>
-        <ion-button fill="outline" class="toggle-section-btn" (click)="toggleMissionSection()">
+        <ion-button fill="clear" class="toggle-section-btn" (click)="toggleMissionSection()">
           {{ expandMissionSection ? 'Less' : 'More' }}
           <ion-icon slot="end" [name]="expandMissionSection ? 'arrow-up' : 'arrow-down'"></ion-icon>
         </ion-button>

@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>Hello!</ion-title>
+    <ion-title>About The Brewery Bible</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,7 +12,6 @@
   <!-- Intro -->
   <ion-card color="dark">
     <ion-card-header>
-      <ion-card-subtitle> Welcome to The Brewery Bible </ion-card-subtitle>
       <ion-card-title> Your beer adventure starts with us! </ion-card-title>
     </ion-card-header>
 
@@ -26,6 +25,19 @@
       <p>With a growing emphasis on local provenance and craft, The Brewery Bible will help you wherever you are on your beer journey, from the curious to the converted. Sample the freshest beers in the country, right next to where they are made. You might even meet the brewer or tuck into a beer and food pairing to help you think about beer in a completely different way.</p>
 
       <p>Gather some friends, open the map view or simply tap the beer icon and start planning your next beer adventure...</p>
+
+      <ion-list>
+        <ion-item color="dark" (click)="team()">
+          Meet the Team
+        </ion-item>
+        <ion-item color="dark" (click)="legal()">
+          Terms of Use
+        </ion-item>
+        <ion-item color="dark" (click)="legal()">
+          Privacy Policy
+        </ion-item>
+      </ion-list>
+
     </ion-card-content>
   </ion-card>
 

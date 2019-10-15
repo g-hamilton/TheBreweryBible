@@ -22,7 +22,8 @@ const routes: Routes = [
   { path: 'listing/:id', loadChildren: './listing-detail/listing-detail.module#ListingDetailPageModule' },
   { path: 'about', loadChildren: './about/about.module#AboutPageModule' },
   { path: 'map', loadChildren: './map/map.module#MapPageModule' },
-  { path: 'personalise', loadChildren: './personalise/personalise.module#PersonalisePageModule' }
+  { path: 'personalise', loadChildren: './personalise/personalise.module#PersonalisePageModule' },
+  { path: 'team', loadChildren: './team/team.module#TeamPageModule' }
 ];
 
 @NgModule({
