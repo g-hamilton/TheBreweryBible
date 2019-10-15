@@ -24,26 +24,34 @@
 
     <!-- Name & Location -->
     <ion-card color="dark">
-      <ion-card-content>
-        <h1 *ngIf="listing.name">{{ listing.name }}</h1>
-        <h2 *ngIf="listing.addressCity && listing.addressCounty">{{ listing.addressCity + ', ' + listing.addressCounty }}</h2>
-      </ion-card-content>
+      <ion-card-header>
+        <ion-card-title *ngIf="listing.name">
+          {{ listing.name }}
+        </ion-card-title>
+        <ion-card-subtitle *ngIf="listing.addressCity && listing.addressCounty">
+          {{ listing.addressCity + ', ' + listing.addressCounty }}
+        </ion-card-subtitle>
+      </ion-card-header>
     </ion-card>
 
     <!-- Features -->
     <ion-card *ngIf="listing.businessFeatures" color="dark">
       <ion-card-content>
-        <ion-chip *ngFor="let feature of filterFeatures()" class="global__features-tag">
+        <ion-chip *ngFor="let feature of filterFeatures()" color="primary" outline="true">
           <ion-icon [name]="getIcon(feature)"></ion-icon>
-          <ion-label *ngIf="businessFeatures" id="business-feature-tag-name">{{ businessFeatures[feature.id].name }}</ion-label>
+          <ion-label color="light" *ngIf="businessFeatures" id="business-feature-tag-name">{{ businessFeatures[feature.id].name }}</ion-label>
         </ion-chip>
       </ion-card-content>
     </ion-card>
 
     <!-- About -->
     <ion-card *ngIf="listing.aboutText" color="dark">
+      <ion-card-header>
+        <ion-card-title>
+          About the {{ listing.businessFeatures.isBrewer.selected ? 'brewery' : 'venue' }}
+        </ion-card-title>
+      </ion-card-header>
       <ion-card-content>
-        <ion-card-title>About the {{ listing.businessFeatures.isBrewer.selected ? 'brewery' : 'venue' }}</ion-card-title>
         <div [className]="expandAboutSection ? 'expanded' : 'collapsed-about'">{{ listing.aboutText }}</div>
         <ion-button fill="clear" class="toggle-section-btn" (click)="toggleAboutSection()">
           {{ expandAboutSection ? 'Less' : 'More' }}
@@ -54,8 +62,12 @@
 
     <!-- Mission Statement -->
     <ion-card *ngIf="listing.missionStatement" color="dark">
+      <ion-card-header>
+        <ion-card-title>
+          Mission statement
+        </ion-card-title>
+      </ion-card-header>
       <ion-card-content>
-        <ion-card-title>Mission statement</ion-card-title>
         <div [className]="expandMissionSection ? 'expanded' : 'collapsed-about'">{{ listing.missionStatement }}</div>
         <ion-button fill="clear" class="toggle-section-btn" (click)="toggleMissionSection()">
           {{ expandMissionSection ? 'Less' : 'More' }}
@@ -66,8 +78,12 @@
 
     <!-- Beer Inventory -->
     <ion-card color="dark" *ngIf="listing.inventory && listing.inventory.beers">
+      <ion-card-header>
+        <ion-card-title>
+          Discover the beers
+        </ion-card-title>
+      </ion-card-header>
       <ion-card-content>
-        <ion-card-title>Discover the beers</ion-card-title>
         <ion-list>
           <ion-item color="dark" *ngFor="let beer of beerInventory ; let i = index" (click)="viewBeer(i)">
             <ion-avatar item-start>
@@ -83,8 +99,12 @@
 
     <!-- Opening Times -->
     <ion-card *ngIf="listing.businessHours" color="dark">
+      <ion-card-header>
+        <ion-card-title>
+          Opening times
+        </ion-card-title>
+      </ion-card-header>
       <ion-card-content>
-        <ion-card-title>Opening times</ion-card-title>
         <div [className]="expandHoursSection ? 'expanded' : 'collapsed-hours'">
           <ion-list>
             <ion-item color="dark">
@@ -168,8 +188,12 @@
 
     <!-- Highlights -->
     <ion-card color="dark" *ngIf="listing.dateEstablished || listing.totalBeersProduced || listing.hlPerYear">
+      <ion-card-header>
+        <ion-card-title>
+          Highlights
+        </ion-card-title>
+      </ion-card-header>
       <ion-card-content>
-        <ion-card-title>Highlights</ion-card-title>
         <p *ngIf="listing.dateEstablished"><span class="strong">Established:</span> {{ listing.dateEstablished }}</p>
         <p *ngIf="listing.totalBeersProduced"><span class="strong">Beers produced:</span> {{ listing.totalBeersProduced }}</p>
         <p *ngIf="listing.hlPerYear"><span class="strong">Production volume:</span> {{ listing.hlPerYear }} hecto-litres per year</p>
