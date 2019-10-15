@@ -84,13 +84,15 @@
         </ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <ion-list>
+        <ion-list color="dark">
           <ion-item color="dark" *ngFor="let beer of beerInventory ; let i = index" (click)="viewBeer(i)">
             <ion-avatar slot="start">
               <img [src]="beer.image.img">
             </ion-avatar>
-            <h2>{{ beer.name }}</h2>
-            <p>{{ getBeerTypeName(beer.type) + ' • ' + beer.abv + '%' }}</p>
+            <ion-label>
+              <h2 id="beer-name">{{ beer.name }}</h2>
+              <p>{{ getBeerTypeName(beer.type) + ' • ' + beer.abv + '%' }}</p>
+            </ion-label>
             <ion-button fill="clear" slot="end">View</ion-button>
           </ion-item>
         </ion-list>
@@ -107,76 +109,56 @@
       <ion-card-content>
         <div [className]="expandHoursSection ? 'expanded' : 'collapsed-hours'">
           <ion-list>
+
             <ion-item color="dark">
-              <ion-row>
-                <ion-col width-50>
-                  Monday
-                </ion-col>
-                <ion-col width-50>
-                  {{ listing.businessHours.monday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.monday.lower) + ' - ' + transformTimeForUI(listing.businessHours.monday.upper) }}
-                </ion-col>
-              </ion-row>
+              <ion-label> Monday </ion-label>
+              <ion-note slot="end" color="primary">
+                {{ listing.businessHours.monday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.monday.lower) + ' - ' + transformTimeForUI(listing.businessHours.monday.upper) }}
+              </ion-note>
             </ion-item>
+
             <ion-item color="dark">
-              <ion-row>
-                <ion-col width-50>
-                  Tuesday
-                </ion-col>
-                <ion-col width-50>
-                    {{ listing.businessHours.tuesday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.tuesday.lower) + ' - ' + transformTimeForUI(listing.businessHours.tuesday.upper) }}
-                </ion-col>
-              </ion-row>
+              <ion-label> Tuesday </ion-label>
+              <ion-note slot="end" color="primary">
+                {{ listing.businessHours.tuesday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.tuesday.lower) + ' - ' + transformTimeForUI(listing.businessHours.tuesday.upper) }}
+              </ion-note>
             </ion-item>
+
             <ion-item color="dark">
-              <ion-row>
-                <ion-col width-50>
-                  Wednesday
-                </ion-col>
-                <ion-col width-50>
-                    {{ listing.businessHours.wednesday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.wednesday.lower) + ' - ' + transformTimeForUI(listing.businessHours.wednesday.upper) }}
-                </ion-col>
-              </ion-row>
+              <ion-label> Wednesday </ion-label>
+              <ion-note slot="end" color="primary">
+                {{ listing.businessHours.wednesday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.wednesday.lower) + ' - ' + transformTimeForUI(listing.businessHours.wednesday.upper) }}
+              </ion-note>
             </ion-item>
+
             <ion-item color="dark">
-              <ion-row>
-                <ion-col width-50>
-                  Thursday
-                </ion-col>
-                <ion-col width-50>
-                    {{ listing.businessHours.thursday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.thursday.lower) + ' - ' + transformTimeForUI(listing.businessHours.thursday.upper) }}
-                </ion-col>
-              </ion-row>
+              <ion-label> Thursday </ion-label>
+              <ion-note slot="end" color="primary">
+                {{ listing.businessHours.thursday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.thursday.lower) + ' - ' + transformTimeForUI(listing.businessHours.thursday.upper) }}
+              </ion-note>
             </ion-item>
+            
             <ion-item color="dark">
-              <ion-row>
-                <ion-col width-50>
-                  Friday
-                </ion-col>
-                <ion-col width-50>
-                    {{ listing.businessHours.friday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.friday.lower) + ' - ' + transformTimeForUI(listing.businessHours.friday.upper) }}
-                </ion-col>
-              </ion-row>
+              <ion-label> Friday </ion-label>
+              <ion-note slot="end" color="primary">
+                {{ listing.businessHours.friday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.friday.lower) + ' - ' + transformTimeForUI(listing.businessHours.friday.upper) }}
+              </ion-note>
             </ion-item>
+            
             <ion-item color="dark">
-              <ion-row>
-                <ion-col width-50>
-                  Saturday
-                </ion-col>
-                <ion-col width-50>
-                    {{ listing.businessHours.saturday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.saturday.lower) + ' - ' + transformTimeForUI(listing.businessHours.saturday.upper) }}
-                </ion-col>
-              </ion-row>
+              <ion-label> Saturday </ion-label>
+              <ion-note slot="end" color="primary">
+                {{ listing.businessHours.saturday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.saturday.lower) + ' - ' + transformTimeForUI(listing.businessHours.saturday.upper) }}
+              </ion-note>
             </ion-item>
+            
             <ion-item color="dark">
-              <ion-row>
-                <ion-col width-50>
-                  Sunday
-                </ion-col>
-                <ion-col width-50>
-                    {{ listing.businessHours.sunday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.sunday.lower) + ' - ' + transformTimeForUI(listing.businessHours.sunday.upper) }}
-                </ion-col>
-              </ion-row>
+              <ion-label> Sunday </ion-label>
+              <ion-note slot="end" color="primary">
+                {{ listing.businessHours.sunday.closed ? 'Closed' : transformTimeForUI(listing.businessHours.sunday.lower) + ' - ' + transformTimeForUI(listing.businessHours.sunday.upper) }}
+              </ion-note>
             </ion-item>
+            
           </ion-list>
         </div>
         <ion-button fill="clear" class="toggle-section-btn" (click)="toggleHoursSection()">
