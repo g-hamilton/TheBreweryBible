@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonContent, IonInfiniteScroll, ModalController } from '@ionic/angular';
+import { IonContent, ModalController } from '@ionic/angular';
 
 import { Plugins } from '@capacitor/core';
 const { Storage } = Plugins;
 
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 import { DataService } from '../services/data.service';
 import { LoadingService } from '../services/loading.service';
@@ -276,7 +276,7 @@ export class HomePage {
       event.target.complete();
     }
 
-    onSearchCancel() {
+    onSearchCancel(event?: any) {
       if (this.searchActivated) {
         this.paginationPage = -1;
         this.listings = [];
@@ -299,7 +299,12 @@ export class HomePage {
   // }
 
   viewMap() {
-    this.router.navigate(['/map'])
+    const extras: NavigationExtras = {
+      state: {
+        listings: this.listings
+      }
+    };
+    this.router.navigate(['/map'], extras)
     .catch(err => console.error(err));
   }
 

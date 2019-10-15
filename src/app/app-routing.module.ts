@@ -19,7 +19,7 @@ const routes: Routes = [
   },
   { path: 'onboarding', loadChildren: './onboarding/onboarding.module#OnboardingPageModule' },
   { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule' },
-  { path: 'listing/:name', loadChildren: './listing-detail/listing-detail.module#ListingDetailPageModule' },
+  { path: 'listing/:id', loadChildren: './listing-detail/listing-detail.module#ListingDetailPageModule' },
   { path: 'about', loadChildren: './about/about.module#AboutPageModule' },
   { path: 'map', loadChildren: './map/map.module#MapPageModule' },
   { path: 'personalise', loadChildren: './personalise/personalise.module#PersonalisePageModule' }
