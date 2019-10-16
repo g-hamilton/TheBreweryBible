@@ -97,8 +97,29 @@ ion-header ion-icon.back-button-icon.icon, ion-header .back-button-text {
     max-width: 400px;
 }
 // The popup tip / anchor
-.mapboxgl-popup-tip {
-    border-top-color: var(--ion-color-darkest) !important;
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+    border-top-color: var(--ion-color-darkest);
+}
+.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
+    border-top-color: var(--ion-color-darkest);
+}
+.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip {
+    border-top-color: var(--ion-color-darkest);
+}
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+    border-right-color: var(--ion-color-darkest);
+}
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+    border-left-color: var(--ion-color-darkest);
+}
+.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
+    border-bottom-color: var(--ion-color-darkest);
+}
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+    border-bottom-color: var(--ion-color-darkest);
+}
+.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip {
+    border-bottom-color: var(--ion-color-darkest);
 }
 // The popup content
 .mapboxgl-popup-content {
@@ -109,10 +130,6 @@ ion-header ion-icon.back-button-icon.icon, ion-header .back-button-text {
 .mapboxgl-popup-close-button {
     color: var(--ion-color-lightest);
     font-size: 2.2em;
-}
-// Custom inner content container
-#popup-inner-content {
-    //
 }
 // Custom popup image
 #popup-img {
@@ -160,4 +177,7 @@ ion-card-title {
 }
 ion-card-subtitle {
     color: var(--ion-color-medium) !important;
+}
+.card-content-ios p, .card-content-md p {
+    margin-bottom: 14px;
 }

@@ -1,6 +1,6 @@
 <ion-content class="ion-padding">
   <ion-card color="dark" *ngIf="beer">
-    <img [src]="beer.image.img"/>
+    <img id="beer-img" [src]="beer.image.img"/>
     <ion-card-header>
       <ion-card-title>{{ beer.name }}</ion-card-title>
       <ion-card-subtitle>{{ getBeerTypeName(beer.type) }} • {{ beer.abv }} %</ion-card-subtitle>

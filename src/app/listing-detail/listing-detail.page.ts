@@ -121,16 +121,17 @@ export class ListingDetailPage implements OnInit {
     const id: string = feature.id;
     switch (id) {
       case 'isBrewer': return 'beer';
+      case 'isMicroBrewer': return 'beer';
       case 'canDrink': return 'pint';
       case 'canShop': return 'basket';
       case 'isCaskMasqueAccredited': return 'ribbon';
       case 'hasCAMRAMembership': return 'checkmark';
       case 'hasSIBAMembership': return 'checkmark';
-      case 'hasCask': return 'checkmark';
-      case 'hasKeg': return 'checkmark';
+      case 'hasCask': return 'pint';
+      case 'hasKeg': return 'pint';
       case 'hasGarden': return 'flower';
       case 'hasSports': return 'football';
-      case 'hasDisabledAccess': return 'chackmark';
+      case 'hasDisabledAccess': return 'checkmark';
       case 'isFamilyFriendly': return 'people';
       case 'isPetFriendly': return 'paw';
       case 'hasPoolTable': return 'keypad';
@@ -140,8 +141,11 @@ export class ListingDetailPage implements OnInit {
       case 'servesSnacks': return 'restaurant';
       case 'hasLiveMusic': return 'musical-notes';
       case 'hasTours': return 'flag';
-      case 'hasTaphouse': return 'home';
+      case 'hasTaphouse': return 'beer';
       case 'isBookingRequired': return 'checkbox';
+      case 'hasMeetTheBrewer': return 'contacts';
+      case 'hasTastings': return 'thumbs-up';
+      case 'hasTapTakeover': return 'key';
     }
     return 'star'; // Fallback
   }
