@@ -1,4 +1,5 @@
-import { Directive, AfterViewInit, ElementRef, Renderer2 } from '@angular/core';
+import { Directive, Renderer2, OnInit } from '@angular/core';
+import { DomController } from '@ionic/angular';
 
 @Directive({
   selector: '[appScrollHide]',
@@ -7,49 +8,71 @@ import { Directive, AfterViewInit, ElementRef, Renderer2 } from '@angular/core';
     '(ionScroll)': 'onContentScroll($event)' // Detect scroll on ion-content to trigger
   }
 })
-export class ScrollHideDirective implements AfterViewInit {
+export class ScrollHideDirective implements OnInit {
 
   private header: Element;
   private footer: Element;
-  private triggerDistance: number;
-  private hiding: boolean;
+  private triggerDistance = 20;
+  private hidden = false;
 
-  constructor(public element: ElementRef, public renderer: Renderer2) {
+  constructor(
+    private renderer: Renderer2,
+    private domCtrl: DomController
+    ) {
     console.log('Hello ScrollHide Directive');
-    this.triggerDistance = 20;
-    this.hiding = false;
   }
 
-  // Initial setup
-  ngAfterViewInit() {
-    this.header = document.getElementById('page-header');
-    this.renderer.setStyle(this.header, 'webkitTransition', 'top 700ms');
-    this.renderer.setStyle(this.header, 'webkitTransition', 'top 700ms');
-    this.footer = document.getElementById('page-footer');
-    this.renderer.setStyle(this.footer, 'webkitTransition', 'bottom 700ms');
+  ngOnInit() {
+    this.initStyles();
   }
 
-  // When scrolling
-  onContentScroll(event) {
+  initStyles() {
+    /*
+    Initial setup. Using domCtrl to write to the DOM at the most efficient time for better performance.
+    */
+    this.domCtrl.write(() => {
+      this.header = document.getElementById('page-header');
+      this.renderer.setStyle(this.header, 'webkitTransition', 'top 700ms');
+      this.renderer.setStyle(this.header, 'webkitTransition', 'top 700ms');
+      this.footer = document.getElementById('page-footer');
+      this.renderer.setStyle(this.footer, 'webkitTransition', 'bottom 700ms');
+    });
+  }
 
-    const distance = event.detail.deltaY;
+  onContentScroll(scrollEvent) {
+    /*
+    Fired when (ionScroll) event fires on the <ion-content> element.
+    Note: This event must be manually enabled on the element as Ionic disbales by default due performance.
+    */
+    const delta = scrollEvent.detail.deltaY;
 
-    if (event.detail.velocityY > 0 && (distance > this.triggerDistance)) {
-      // We're scrolling down past the anti-bounce trigger point
-      this.renderer.setStyle(this.header, 'top', '-114px');
+    if (scrollEvent.detail.currentY === 0 && this.hidden) {
+      this.show();
+    } else if (!this.hidden && delta > this.triggerDistance) {
+      this.hide();
+    } else if (this.hidden && delta < -this.triggerDistance) {
+      this.show();
+    }
+  }
+
+  hide() {
+    // Hide the header and footer elements.
+    this.domCtrl.write(() => {
+      this.renderer.setStyle(this.header, 'top', '-120px');
       this.renderer.setStyle(this.footer, 'bottom', '-50px');
-      this.hiding = true;
-    } else if (event.detail.velocityY > 0 && this.hiding) {
-      // We're scrolling down again
-      this.renderer.setStyle(this.header, 'top', '-114px');
-      this.renderer.setStyle(this.footer, 'bottom', '-50px');
-    } else {
-      // We're scrolling up
+    });
+
+    this.hidden = true;
+  }
+
+  show() {
+    // Show the header and footer elements.
+    this.domCtrl.write(() => {
       this.renderer.setStyle(this.header, 'top', '0px');
       this.renderer.setStyle(this.footer, 'bottom', '0px');
-      this.hiding = false;
-    }
+    });
 
+    this.hidden = false;
   }
 
 }
