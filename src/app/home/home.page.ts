@@ -3,6 +3,7 @@ import { IonContent, ModalController } from '@ionic/angular';
 
 import { Plugins } from '@capacitor/core';
 const { Storage } = Plugins;
+const { Keyboard } = Plugins;
 
 import { Router, NavigationExtras } from '@angular/router';
 
@@ -242,6 +243,8 @@ export class HomePage {
   }
 
   async onSearch(ev: any) {
+    Keyboard.hide() // Hide the keyboard as it's not done by the framework
+    .catch(err => console.error(err));
     this.searchQuery = ev.target.value;
     if (this.searchQuery) { // Workaround for (ionCancel) calling (ionSearch) in the searchbar component.
       this.searchActivated = true;

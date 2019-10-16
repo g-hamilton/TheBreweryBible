@@ -224,7 +224,12 @@ export class MapPage implements OnInit {
       return new mapboxgl.LngLat(res.position.coords.longitude, res.position.coords.latitude);
     } else {
       // Geolocation not authorised or unable to return a position
-      this.toastService.presentToast('Unable to locate you at this time.', 3000, 'danger');
+      if (res.error.message === 'location unavailable') {
+        // tslint:disable-next-line: max-line-length
+        this.toastService.presentToast('Unable to retrieve your location at this time. Please check your device settings and allow location services to use this feature.', 0, 'danger');
+      } else {
+        this.toastService.presentToast(res.error.message, 0, 'danger');
+      }
       return new mapboxgl.LngLat(-0.127758, 51.507351); // Return a default lngLat position
     }
   }
@@ -239,12 +244,6 @@ export class MapPage implements OnInit {
         const res = await Geolocation.getCurrentPosition();
         return { success: true, position: res } as GeolocationCustomResponse;
       } catch (err) {
-        if (err.message === 'location unavailable') {
-          // tslint:disable-next-line: max-line-length
-          this.toastService.presentToast('Unable to retrieve your location at this time. Please check your device settings and allow location services to use this feature.', 0, 'danger');
-        } else {
-          this.toastService.presentToast(err.message, 0, 'danger');
-        }
         return { success: false, error: err.message } as GeolocationCustomResponse;
       }
     }
