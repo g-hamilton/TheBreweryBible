@@ -2,6 +2,12 @@ ion-item {
   --padding-end: 0;
   --inner-padding-end: 0;
 }
+ion-content.no-offset-top {
+  --offset-top: 112px !important;
+}
+#listings-list {
+  padding-top: 0;
+}
 #listing-item {
   height: 160px;
   width: 96%;

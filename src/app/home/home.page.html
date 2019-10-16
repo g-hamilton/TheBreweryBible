@@ -1,4 +1,4 @@
-<ion-header #header>
+<ion-header id="page-header">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
@@ -20,9 +20,15 @@
   ></ion-searchbar>
 </ion-header>
 
-<ion-content fullscreen>
+<!--
+ Note: Enabling scroll events on the content because we need (ionScroll) with it's
+  associated event in order to use the custom appScrollHide directive to hide header & footer
+  on scrolling
+-->
+<ion-content [scrollEvents]="true" fullscreen="true" appScrollHide class="no-offset-top">
+
   <div *ngIf="listings && listings.length > 0 ; else noListings">
-    <ion-list>
+    <ion-list id="listings-list">
       <ion-item *ngFor="let listing of listings" id="listing-item" class="ion-no-padding" (click)="viewListing(listing.objectID)">
         <img [src]="listing.featurePhotoUrl" id="img" />
         <div id="overlay">
@@ -65,7 +71,7 @@
 </ion-content>
 
 <!-- Footer -->
-<ion-footer #footer>
+<ion-footer id="page-footer">
   <ion-button slot="center" id="filter-btn" shape="round" (click)="viewFilters()">
     <ion-icon slot="start" name="md-funnel"></ion-icon>
     Filter

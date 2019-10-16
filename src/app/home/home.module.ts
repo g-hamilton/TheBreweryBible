@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { HomePage } from './home.page';
 import { ListingFiltersPage } from '../listing-filters/listing-filters-page';
 import { ListingSearchFiltersPage } from '../listing-search-filters/listing-search-filters.page';
+import { DirectivesModule } from '../directives/directives.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ListingSearchFiltersPage } from '../listing-search-filters/listing-sear
         path: '',
         component: HomePage
       }
-    ])
+    ]),
+    DirectivesModule
   ],
   declarations: [
     HomePage,
