@@ -7,6 +7,8 @@ const { Share } = Plugins;
 const { StatusBar } = Plugins;
 const { Browser } = Plugins;
 
+import { AnalyticsService } from './services/analytics.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -15,7 +17,8 @@ const { Browser } = Plugins;
 export class AppComponent implements OnInit {
 
   constructor(
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private analyticsService: AnalyticsService
   ) {
     this.initialiseApp();
   }
@@ -26,6 +29,8 @@ export class AppComponent implements OnInit {
 
   async initialiseApp() {
     try {
+      // Initialise analytics
+      this.analyticsService.init();
       // Go dark mode on the status bar (light text for dark bg)
       StatusBar.setStyle({
         style: StatusBarStyle.Dark
