@@ -32,6 +32,7 @@
     "@types/algoliasearch": "^3.34.3",
     "@types/geojson": "^7946.0.7",
     "@types/mapbox-gl": "^0.54.4",
+    "@types/mixpanel-browser": "^2.23.1",
     "algoliasearch": "^3.35.1",
     "core-js": "^2.5.4",
     "country-flag-emoji": "^1.0.2",

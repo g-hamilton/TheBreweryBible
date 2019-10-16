@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 
 import * as mixpanel from 'mixpanel-browser'; // https://www.npmjs.com/package/mixpanel-browser
 
-import { Listing } from '../interfaces/listing.interface';
-
 /*
   Analytics provided by Mixpanel
   Using the Mixpanel Browser client side JS library
@@ -48,6 +46,26 @@ export class AnalyticsService {
 
   signOut() {
     mixpanel.track('Signed Out');
+  }
+
+  viewPage(page: 'Home' | 'Onboarding' | 'Personalise' | 'Map') {
+    mixpanel.track('Viewed Page', {
+      page
+    });
+  }
+
+  search(query: string) {
+    mixpanel.track('Searched', {
+      query
+    });
+  }
+
+  quitOnboarding() {
+    mixpanel.track('Quit Onboarding');
+  }
+
+  completeOnboarding() {
+    mixpanel.track('Completed Onboarding');
   }
 
 }

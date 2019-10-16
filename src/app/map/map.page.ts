@@ -9,6 +9,7 @@ const { Geolocation } = Plugins;
 const  { Storage } = Plugins;
 
 import { ToastService } from '../services/toast.service';
+import { AnalyticsService } from '../services/analytics.service';
 
 import { AlgoliaListing } from '../interfaces/algolia.listing.interface';
 import { GeolocationCustomResponse } from '../interfaces/geolocation.custom.response.interface';
@@ -39,6 +40,7 @@ export class MapPage implements OnInit {
     private platform: Platform,
     private toastService: ToastService,
     private router: Router,
+    private analyticsService: AnalyticsService
   ) {
     // One time import of any listing data passed via navigationExtras (must call from constructor to catch in time)
     this.importListingData();
@@ -53,8 +55,8 @@ export class MapPage implements OnInit {
     await this.buildMap();
   }
 
-  ionViewDidEnter() {
-    console.log('Hello ionViewDidEnter MapPage');
+  ionViewWillEnter() {
+    this.analyticsService.viewPage('Map');
   }
 
   async importUserLocation() {

@@ -9,6 +9,7 @@ import { Router, NavigationExtras } from '@angular/router';
 
 import { DataService } from '../services/data.service';
 import { LoadingService } from '../services/loading.service';
+import { AnalyticsService } from '../services/analytics.service';
 
 import { ListingFiltersPage } from '../listing-filters/listing-filters-page';
 import { ListingSearchFiltersPage } from '../listing-search-filters/listing-search-filters.page';
@@ -46,9 +47,14 @@ export class HomePage {
     private dataService: DataService,
     private router: Router,
     private loadingService: LoadingService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private analyticsService: AnalyticsService
     ) {
       this.initialiseListings();
+  }
+
+  ionViewWillEnter() {
+    this.analyticsService.viewPage('Home');
   }
 
   async initialiseListings() {
@@ -246,7 +252,8 @@ export class HomePage {
     Keyboard.hide() // Hide the keyboard as it's not done by the framework
     .catch(err => console.error(err));
     this.searchQuery = ev.target.value;
-    if (this.searchQuery) { // Workaround for (ionCancel) calling (ionSearch) in the searchbar component.
+    if (this.searchQuery) {
+      this.analyticsService.search(this.searchQuery);
       this.searchActivated = true;
       this.endOfSearchResults = false;
       this.paginationPage ++;

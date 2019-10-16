@@ -8,6 +8,7 @@ const { Geolocation } = Plugins;
 
 import { DataService } from '../services/data.service';
 import { ToastService } from '../services/toast.service';
+import { AnalyticsService } from '../services/analytics.service';
 
 import { GeolocationCustomResponse } from '../interfaces/geolocation.custom.response.interface';
 
@@ -59,7 +60,8 @@ export class PersonalisePage implements OnInit {
     private router: Router,
     private dataService: DataService,
     private platform: Platform,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private analyticsService: AnalyticsService
     ) {
   }
 
@@ -67,6 +69,10 @@ export class PersonalisePage implements OnInit {
     console.log('onInit Personalise page');
     this.sideMenu.enable(false) // Disable the sidemenu
     .catch(err => console.error(err));
+  }
+
+  ionViewWillEnter() {
+    this.analyticsService.viewPage('Personalise');
   }
 
   skip() {
@@ -204,6 +210,7 @@ export class PersonalisePage implements OnInit {
 
   onboardingComplete() {
     try {
+      this.analyticsService.completeOnboarding();
       Storage.set({
         key: 'onboardingComplete',
         value: 'true'

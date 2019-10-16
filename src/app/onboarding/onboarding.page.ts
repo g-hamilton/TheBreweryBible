@@ -5,8 +5,10 @@ import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
 const { Storage } = Plugins;
 
-import { EmojiCountry } from '../interfaces/country.interface';
 import { DataService } from '../services/data.service';
+import { AnalyticsService } from '../services/analytics.service';
+
+import { EmojiCountry } from '../interfaces/country.interface';
 
 
 @Component({
@@ -28,7 +30,8 @@ export class OnboardingPage implements OnInit {
   constructor(
     private sideMenu: MenuController,
     private router: Router,
-    private dataService: DataService
+    private dataService: DataService,
+    private analyticsService: AnalyticsService
     ) { }
 
   ngOnInit() {
@@ -39,6 +42,10 @@ export class OnboardingPage implements OnInit {
     } catch (err) {
       console.error(err);
     }
+  }
+
+  ionViewWillEnter() {
+    this.analyticsService.viewPage('Onboarding');
   }
 
   importSupportedCountries() {
@@ -81,6 +88,7 @@ export class OnboardingPage implements OnInit {
 
   exitOnboarding() {
     try {
+      this.analyticsService.quitOnboarding();
       Storage.set({
         key: 'onboardingComplete',
         value: 'true'
