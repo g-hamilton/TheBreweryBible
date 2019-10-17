@@ -15,6 +15,7 @@ import { AnalyticsService } from '../services/analytics.service';
 import { AlgoliaListing } from '../interfaces/algolia.listing.interface';
 import { GeolocationCustomResponse } from '../interfaces/geolocation.custom.response.interface';
 import { FeatureCollection } from 'geojson';
+import { DataService } from '../services/data.service';
 
 /*
   Using Mapbox-GL Javascript SDK for mapping.
@@ -22,6 +23,8 @@ import { FeatureCollection } from 'geojson';
 
   Using Capacitor Geolocation for device geolocation.
   https://capacitor.ionicframework.com/docs/apis/geolocation
+
+  Data that interacts with the map is converted into standard GeoJSON format.
 */
 
 @Component({
@@ -36,12 +39,16 @@ export class MapPage implements OnInit {
   public listings: AlgoliaListing[];
   private mapDataSource: any;
   private listingGeoJson: FeatureCollection;
+  private searchQuery: string;
+  public searchActivated: boolean;
+  private searchResultsSnapshot: AlgoliaListing[];
 
   constructor(
     private platform: Platform,
     private toastService: ToastService,
     private router: Router,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private dataService: DataService
   ) {
     // One time import of any listing data passed via navigationExtras (must call from constructor to catch in time)
     this.importListingData();
@@ -287,7 +294,7 @@ export class MapPage implements OnInit {
     }
   }
 
-  convertListingsToGeoJson() {
+  async convertListingsToGeoJson() {
     const featureCollection = {
       type: 'FeatureCollection',
       features: []
@@ -312,22 +319,36 @@ export class MapPage implements OnInit {
     console.log('Converted listing GeoJSON Data:', this.listingGeoJson);
   }
 
-  onSeachbarChange() {
-    //
-  }
-
-  async onSearch(event) {
+  async onSearch(ev: any) {
     /*
     Hide the keyboard and call to resize the map after the 550ms keyboard close transition
     to ensure the map fills the full view again.
     */
-    await Keyboard.hide(); // Note: Resolves before the transition actually completes!
+    await Keyboard.hide() // Note: Resolves before the transition actually completes!
+    .catch(err => console.error(err));
     setTimeout(() => {
       this.map.resize();
     }, 550);
+    this.searchQuery = ev.target.value;
+    if (this.searchQuery) {
+      this.analyticsService.search(this.searchQuery);
+      this.searchActivated = true;
+      const res = await this.dataService.search(-1, this.searchQuery);
+      this.listings = res;
+      this.searchResultsSnapshot = res;
+      if (this.listings) {
+        // Convert fetched listings into listing geoJSON format for the map
+        await this.convertListingsToGeoJson();
+        // Set map source data to update markers
+        this.mapDataSource.setData(this.listingGeoJson);
+        // Pan to the first listing in the results
+        const newLocation = new mapboxgl.LngLat(this.listings[0].addressGeocode.lng, this.listings[0].addressGeocode.lat);
+        this.map.panTo(newLocation);
+      }
+    }
   }
 
-  onSearchCancel(event) {
+  onSearchCancel(ev) {
     //
   }
 

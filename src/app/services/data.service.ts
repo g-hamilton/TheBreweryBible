@@ -104,6 +104,10 @@ export class DataService {
     Queries Algolia.
     https://www.algolia.com/doc/api-reference/api-parameters/
     Possibility to run a search query on multiple indices.
+
+    Pass a page param of -1 to call for maximum 100 results. Useful for pages such as
+    the map where there is no scrollable list or infinite scroll component to paginate with.
+    Pass any other number (from 0) to request 20 results per page and use pagination.
     */
     try {
       console.log(`Searching query: ${query} - Requesting page: ${page}`);
@@ -111,8 +115,8 @@ export class DataService {
       const searchParams: algoliasearch.QueryParameters = {
         query,
         // filters: this.buildAlgoliaFilters(filters),
-        hitsPerPage: 20,
-        page
+        hitsPerPage: page === -1 ? 100 : 20,
+        page: page === -1 ? 0 : page
       };
       const res = await listingsIndex.search(searchParams);
       console.log('Algolia search hit results:', res.hits);
