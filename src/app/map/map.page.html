@@ -10,6 +10,11 @@
       (search)="onSearch($event)"
       (ionCancel)="onSearchCancel($event)">
     </ion-searchbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="locate()">
+        <ion-icon name="md-locate"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

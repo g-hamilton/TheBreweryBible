@@ -41,7 +41,7 @@ export class MapPage implements OnInit {
   private listingGeoJson: FeatureCollection;
   private searchQuery: string;
   public searchActivated: boolean;
-  private searchResultsSnapshot: AlgoliaListing[];
+  private resultsSnapshot: AlgoliaListing[];
 
   constructor(
     private platform: Platform,
@@ -335,7 +335,7 @@ export class MapPage implements OnInit {
       this.searchActivated = true;
       const res = await this.dataService.search(-1, this.searchQuery);
       this.listings = res;
-      this.searchResultsSnapshot = res;
+      this.resultsSnapshot = res;
       if (this.listings) {
         // Convert fetched listings into listing geoJSON format for the map
         await this.convertListingsToGeoJson();
@@ -349,7 +349,16 @@ export class MapPage implements OnInit {
   }
 
   onSearchCancel(ev) {
-    //
+    if (this.searchActivated) {
+      this.listings = this.resultsSnapshot;
+      this.searchActivated = false;
+    }
+  }
+
+  async locate() {
+    // Pan the map to the user's current location (or default location if loc not available)
+    const location = await this.getUserPositionOrDefault();
+    this.map.panTo(location);
   }
 
   viewMapFilters() {
