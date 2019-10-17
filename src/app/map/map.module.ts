@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { MapPage } from './map.page';
 
-import { ListingFiltersPage } from '../modals/listing-filters/listing-filters-page';
+import { MapFiltersComponent } from '../modals/map-filters/map-filters.component';
 
 const routes: Routes = [
   {
@@ -23,7 +23,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [MapPage, ListingFiltersPage],
-  entryComponents: [ListingFiltersPage]
+  declarations: [MapPage, MapFiltersComponent],
+  entryComponents: [MapFiltersComponent]
 })
 export class MapPageModule {}

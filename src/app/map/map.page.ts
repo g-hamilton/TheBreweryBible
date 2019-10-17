@@ -14,7 +14,7 @@ import { ToastService } from '../services/toast.service';
 import { AnalyticsService } from '../services/analytics.service';
 import { DataService } from '../services/data.service';
 
-import { ListingFiltersPage } from '../modals/listing-filters/listing-filters-page';
+import { MapFiltersComponent } from '../modals/map-filters/map-filters.component';
 
 import { FeatureCollection } from 'geojson';
 import { AlgoliaListing } from '../interfaces/algolia.listing.interface';
@@ -378,7 +378,7 @@ export class MapPage implements OnInit {
   async viewMapFilters() {
     // Pop the modal to filter new results.
     const modalOpts: ModalOptions = {
-      component: ListingFiltersPage,
+      component: MapFiltersComponent,
       componentProps: {
         filters: this.dataService.deepObjClone(this.listingFilters)
       }
