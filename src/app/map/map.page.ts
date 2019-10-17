@@ -6,7 +6,8 @@ import * as mapboxgl from 'mapbox-gl';
 
 import { Plugins, GeolocationOptions } from '@capacitor/core';
 const { Geolocation } = Plugins;
-const  { Storage } = Plugins;
+const { Storage } = Plugins;
+const { Keyboard } = Plugins;
 
 import { ToastService } from '../services/toast.service';
 import { AnalyticsService } from '../services/analytics.service';
@@ -309,6 +310,29 @@ export class MapPage implements OnInit {
     });
     this.listingGeoJson = featureCollection;
     console.log('Converted listing GeoJSON Data:', this.listingGeoJson);
+  }
+
+  onSeachbarChange() {
+    //
+  }
+
+  async onSearch(event) {
+    /*
+    Hide the keyboard and call to resize the map after the 550ms keyboard close transition
+    to ensure the map fills the full view again.
+    */
+    await Keyboard.hide(); // Note: Resolves before the transition actually completes!
+    setTimeout(() => {
+      this.map.resize();
+    }, 550);
+  }
+
+  onSearchCancel(event) {
+    //
+  }
+
+  viewMapFilters() {
+    alert('Click works!');
   }
 
 }

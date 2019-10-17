@@ -3,10 +3,25 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>map</ion-title>
+    <ion-searchbar
+      id="global__custom-searchbar"
+      animated
+      showCancelButton="focus"
+      (ionChange)="onSeachbarChange()"
+      (search)="onSearch($event)"
+      (ionCancel)="onSearchCancel($event)">
+    </ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="no-scroll">
+<ion-content class="no-scroll" fullscreen="true">
   <div id="map-container"></div>
 </ion-content>
+
+<!-- Custom footer -->
+<ion-footer id="page-footer">
+  <ion-button slot="center" class="global__filter-btn" shape="round" (click)="viewMapFilters()">
+    <ion-icon slot="start" name="md-funnel"></ion-icon>
+    Filter
+  </ion-button>
+</ion-footer>
