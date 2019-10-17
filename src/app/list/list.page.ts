@@ -69,7 +69,7 @@ export class ListPage implements OnInit {
 
   async resetOB() {
     Storage.set({
-      key: 'onboardingComplete',
+      key: 'onboardingV1.2Complete',
       value: 'false'
     });
   }

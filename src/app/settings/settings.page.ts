@@ -25,7 +25,7 @@ export class SettingsPage implements OnInit {
   async resetOnboarding() {
     try {
       await Storage.set({
-        key: 'onboardingComplete',
+        key: 'onboardingV1.2Complete',
         value: 'false'
       });
       await this.toastService.presentToast('Welcome tour reset successfully!', 3000, 'success');

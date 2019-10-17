@@ -17,7 +17,7 @@ export class OnboardingGuard implements CanActivate  {
   ): Promise<boolean> {
 
     const onboardingComplete = await Storage.get({
-      key: 'onboardingComplete'
+      key: 'onboardingV1.2Complete'
     });
 
     if (onboardingComplete.value !== 'true') {

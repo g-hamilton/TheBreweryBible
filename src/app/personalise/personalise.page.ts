@@ -212,7 +212,7 @@ export class PersonalisePage implements OnInit {
     try {
       this.analyticsService.completeOnboarding();
       Storage.set({
-        key: 'onboardingComplete',
+        key: 'onboardingV1.2Complete',
         value: 'true'
       });
       this.sideMenu.enable(true); // re-enable the sidemenu

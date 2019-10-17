@@ -356,6 +356,9 @@ export class MapPage implements OnInit {
   }
 
   onSearchCancel(ev) {
+    setTimeout(() => {
+      this.map.resize();
+    }, 550);
     if (this.searchActivated) {
       this.listings = this.resultsSnapshot;
       this.searchActivated = false;

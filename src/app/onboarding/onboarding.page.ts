@@ -90,7 +90,7 @@ export class OnboardingPage implements OnInit {
     try {
       this.analyticsService.quitOnboarding();
       Storage.set({
-        key: 'onboardingComplete',
+        key: 'onboardingV1.2Complete',
         value: 'true'
       });
       this.sideMenu.enable(true); // re-enable the sidemenu
