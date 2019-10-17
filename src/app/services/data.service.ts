@@ -36,14 +36,18 @@ export class DataService {
     /*
     Queries Algolia.
     https://www.algolia.com/doc/api-reference/api-parameters/
+
+    Pass a page param of -1 to call for maximum 100 results. Useful for pages such as
+    the map where there is no scrollable list or infinite scroll component to paginate with.
+    Pass any other number (from 0) to request 20 results per page and use pagination.
     */
     try {
       console.log('Requesting page:', page);
       const searchIndex = this.searchClient.initIndex('prod_LISTINGS');
       const searchParams: algoliasearch.QueryParameters = {
         filters: this.buildAlgoliaFilters(filters),
-        hitsPerPage: 20,
-        page
+        hitsPerPage: page === -1 ? 100 : 20,
+        page: page === -1 ? 0 : page
       };
       const res = await searchIndex.search(searchParams);
       console.log('Algolia search hit results:', res.hits);

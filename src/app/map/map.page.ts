@@ -343,11 +343,14 @@ export class MapPage implements OnInit {
       this.searchActivated = true;
       // Search for results
       const res = await this.dataService.search(-1, this.searchQuery);
-      this.listings = res;
-      this.resultsSnapshot = res;
-      if (this.listings) {
+      if (res.length > 0) {
+        this.listings = res;
+        this.resultsSnapshot = res;
         // Results received so load them into the view
         this.loadFilteredListings();
+      } else {
+        console.log('Search returned zero results');
+        this.toastService.presentToast('Sorry, no luck. Please try again.', 3000, 'danger');
       }
     }
   }
