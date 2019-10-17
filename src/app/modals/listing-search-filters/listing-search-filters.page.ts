@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 
-import { ListingFilters } from '../interfaces/listing.filter.interface';
-import { DataService } from '../services/data.service';
-import { ToastService } from '../services/toast.service';
+import { ListingFilters } from '../../interfaces/listing.filter.interface';
+import { DataService } from '../../services/data.service';
+import { ToastService } from '../../services/toast.service';
 
 
 @Component({

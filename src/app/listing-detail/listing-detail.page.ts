@@ -5,7 +5,7 @@ import { ModalController, PopoverController } from '@ionic/angular';
 import { DataService } from '../services/data.service';
 
 import { ViewBeerComponent } from '../view-beer/view-beer.component';
-import { ListingDetailMoreComponent } from '../listing-detail-more/listing-detail-more.component';
+import { ListingDetailMoreComponent } from '../modals/listing-detail-more/listing-detail-more.component';
 
 import { Listing } from '../interfaces/listing.interface';
 import { BeerType } from '../interfaces/beer.type.interface';

@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { ModalController, AlertController } from '@ionic/angular';
 
-import { DataService } from '../services/data.service';
-import { ToastService } from '../services/toast.service';
+import { DataService } from '../../services/data.service';
+import { ToastService } from '../../services/toast.service';
 
-import { ListingFilters } from '../interfaces/listing.filter.interface';
-import { EmojiCountry } from '../interfaces/country.interface';
+import { ListingFilters } from '../../interfaces/listing.filter.interface';
+import { EmojiCountry } from '../../interfaces/country.interface';
 
 
 @Component({

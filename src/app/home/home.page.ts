@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonContent, ModalController } from '@ionic/angular';
+import { ModalOptions } from '@ionic/core';
 
 import { Plugins } from '@capacitor/core';
 const { Storage } = Plugins;
@@ -7,16 +8,15 @@ const { Keyboard } = Plugins;
 
 import { Router, NavigationExtras } from '@angular/router';
 
+import { ListingFiltersPage } from '../modals/listing-filters/listing-filters-page';
+import { ListingSearchFiltersPage } from '../modals/listing-search-filters/listing-search-filters.page';
+
 import { DataService } from '../services/data.service';
 import { LoadingService } from '../services/loading.service';
 import { AnalyticsService } from '../services/analytics.service';
 
-import { ListingFiltersPage } from '../listing-filters/listing-filters-page';
-import { ListingSearchFiltersPage } from '../listing-search-filters/listing-search-filters.page';
-
 import { AlgoliaListing } from '../interfaces/algolia.listing.interface';
 import { ListingFilters } from '../interfaces/listing.filter.interface';
-import { ModalOptions } from '@ionic/core';
 
 
 @Component({
@@ -300,7 +300,8 @@ export class HomePage {
   viewMap() {
     const extras: NavigationExtras = {
       state: {
-        listings: this.listings
+        listings: this.listings,
+        filters: this.listingFilters
       }
     };
     this.router.navigate(['/map'], extras)

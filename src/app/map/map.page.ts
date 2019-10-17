@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { Platform, ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { ModalOptions } from '@ionic/core';
 
 import * as mapboxgl from 'mapbox-gl';
 
@@ -11,11 +12,14 @@ const { Keyboard } = Plugins;
 
 import { ToastService } from '../services/toast.service';
 import { AnalyticsService } from '../services/analytics.service';
+import { DataService } from '../services/data.service';
 
+import { ListingFiltersPage } from '../modals/listing-filters/listing-filters-page';
+
+import { FeatureCollection } from 'geojson';
 import { AlgoliaListing } from '../interfaces/algolia.listing.interface';
 import { GeolocationCustomResponse } from '../interfaces/geolocation.custom.response.interface';
-import { FeatureCollection } from 'geojson';
-import { DataService } from '../services/data.service';
+import { ListingFilters } from '../interfaces/listing.filter.interface';
 
 /*
   Using Mapbox-GL Javascript SDK for mapping.
@@ -42,13 +46,15 @@ export class MapPage implements OnInit {
   private searchQuery: string;
   public searchActivated: boolean;
   private resultsSnapshot: AlgoliaListing[];
+  private listingFilters: ListingFilters;
 
   constructor(
     private platform: Platform,
     private toastService: ToastService,
     private router: Router,
     private analyticsService: AnalyticsService,
-    private dataService: DataService
+    private dataService: DataService,
+    private modalCtrl: ModalController
   ) {
     // One time import of any listing data passed via navigationExtras (must call from constructor to catch in time)
     this.importListingData();
@@ -287,6 +293,8 @@ export class MapPage implements OnInit {
     if (nav && nav.extras) {
       this.listings = nav.extras.state.listings;
       console.log('Imported listings:', this.listings);
+      this.listingFilters = nav.extras.state.filters;
+      console.log('Imported listing filters:', this.listingFilters);
       if (this.listings) {
         // Convert fetched listings into listing geoJSON format for the map
         this.convertListingsToGeoJson();
@@ -333,17 +341,13 @@ export class MapPage implements OnInit {
     if (this.searchQuery) {
       this.analyticsService.search(this.searchQuery);
       this.searchActivated = true;
+      // Search for results
       const res = await this.dataService.search(-1, this.searchQuery);
       this.listings = res;
       this.resultsSnapshot = res;
       if (this.listings) {
-        // Convert fetched listings into listing geoJSON format for the map
-        await this.convertListingsToGeoJson();
-        // Set map source data to update markers
-        this.mapDataSource.setData(this.listingGeoJson);
-        // Pan to the first listing in the results
-        const newLocation = new mapboxgl.LngLat(this.listings[0].addressGeocode.lng, this.listings[0].addressGeocode.lat);
-        this.map.panTo(newLocation);
+        // Results received so load them into the view
+        this.loadFilteredListings();
       }
     }
   }
@@ -355,14 +359,54 @@ export class MapPage implements OnInit {
     }
   }
 
+  async loadFilteredListings() {
+    // Convert fetched listings into listing geoJSON format for the map
+    await this.convertListingsToGeoJson();
+    // Set map source data to update markers
+    this.mapDataSource.setData(this.listingGeoJson);
+    // Pan to the first listing in the results
+    const newLocation = new mapboxgl.LngLat(this.listings[0].addressGeocode.lng, this.listings[0].addressGeocode.lat);
+    this.map.panTo(newLocation);
+  }
+
   async locate() {
     // Pan the map to the user's current location (or default location if loc not available)
     const location = await this.getUserPositionOrDefault();
     this.map.panTo(location);
   }
 
-  viewMapFilters() {
-    alert('Click works!');
+  async viewMapFilters() {
+    // Pop the modal to filter new results.
+    const modalOpts: ModalOptions = {
+      component: ListingFiltersPage,
+      componentProps: {
+        filters: this.dataService.deepObjClone(this.listingFilters)
+      }
+    };
+    try {
+      const filtersModal = await this.modalCtrl.create(modalOpts);
+      filtersModal.onWillDismiss()
+      .then(async res => {
+        const data = res.data;
+        if (data) {
+          console.log('Filters modal dismissed with data:', data);
+          if (!this.dataService.deepObjCompare(this.listingFilters, data)) {
+            console.log('Filters have been modified.');
+            this.listingFilters = data;
+            // Fetch filtered listing results
+            const hits = await this.dataService.getFilteredListings(this.listingFilters, -1);
+            if (hits) {
+              // Results received so load them into the view
+              this.listings = hits;
+              this.loadFilteredListings();
+            }
+          }
+        }
+      });
+      return await filtersModal.present();
+    } catch (err) {
+      console.error(err);
+    }
   }
 
 }

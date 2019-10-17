@@ -4,7 +4,7 @@ import { PopoverController } from '@ionic/angular';
 import { Plugins, BrowserOpenOptions } from '@capacitor/core';
 const { Browser } = Plugins;
 
-import { Listing } from '../interfaces/listing.interface';
+import { Listing } from '../../interfaces/listing.interface';
 
 
 @Component({

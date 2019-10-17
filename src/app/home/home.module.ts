@@ -5,9 +5,10 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
-import { ListingFiltersPage } from '../listing-filters/listing-filters-page';
-import { ListingSearchFiltersPage } from '../listing-search-filters/listing-search-filters.page';
+
 import { DirectivesModule } from '../directives/directives.module';
+import { ListingFiltersPage } from '../modals/listing-filters/listing-filters-page';
+import { ListingSearchFiltersPage } from '../modals/listing-search-filters/listing-search-filters.page';
 
 
 @NgModule({
@@ -21,7 +22,7 @@ import { DirectivesModule } from '../directives/directives.module';
         component: HomePage
       }
     ]),
-    DirectivesModule
+    DirectivesModule,
   ],
   declarations: [
     HomePage,
