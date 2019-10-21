@@ -17,6 +17,7 @@ import { AnalyticsService } from '../services/analytics.service';
 
 import { AlgoliaListing } from '../interfaces/algolia.listing.interface';
 import { ListingFilters } from '../interfaces/listing.filter.interface';
+import { ToastService } from '../services/toast.service';
 
 
 @Component({
@@ -48,7 +49,8 @@ export class HomePage {
     private router: Router,
     private loadingService: LoadingService,
     private modalCtrl: ModalController,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private toastService: ToastService
     ) {
       this.initialiseListings();
   }
@@ -136,6 +138,10 @@ export class HomePage {
     */
     this.paginationPage ++;
     const nextHits = await this.dataService.getFilteredListings(this.listingFilters, this.paginationPage);
+    if (!nextHits) {
+      this.toastService.presentToast('Unable to retrieve listings at this time. Please check your internet connection.', 0, 'danger');
+      return;
+    }
     if (nextHits.length < 20) {
       this.endOfSearchResults = true;
       console.log('End of results. Infinite scroll disabled.');

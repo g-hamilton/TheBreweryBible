@@ -43,7 +43,7 @@
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Always allow Geolocation?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow Geolocation to view your nearest venues on a map</string>
+	<string>Allow Geolocation to view your nearest venues.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>To Record Audio With Video</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>

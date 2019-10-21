@@ -54,6 +54,7 @@ export class DataService {
       return res.hits as AlgoliaListing[];
     } catch (err) {
       console.error(err);
+      return null;
     }
   }
 
